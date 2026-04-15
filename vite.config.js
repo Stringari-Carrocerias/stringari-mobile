@@ -1,25 +1,25 @@
-import { fileURLToPath, URL } from 'node:url';
+import { fileURLToPath, URL } from "node:url";
 
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import vueDevTools from 'vite-plugin-vue-devtools';
-import { VitePWA } from 'vite-plugin-pwa';
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import vueDevTools from "vite-plugin-vue-devtools";
+import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
   plugins: [
     vue(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: "autoUpdate",
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
         cleanupOutdatedCaches: true,
         sourcemap: false,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            handler: 'CacheFirst',
+            handler: "CacheFirst",
             options: {
-              cacheName: 'google-fonts-cache',
+              cacheName: "google-fonts-cache",
               expiration: {
                 maxEntries: 10,
                 maxAgeSeconds: 60 * 60 * 24 * 365, // 1 ano
@@ -31,9 +31,9 @@ export default defineConfig({
           },
           {
             urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-            handler: 'CacheFirst',
+            handler: "CacheFirst",
             options: {
-              cacheName: 'gstatic-fonts-cache',
+              cacheName: "gstatic-fonts-cache",
               expiration: {
                 maxEntries: 10,
                 maxAgeSeconds: 60 * 60 * 24 * 365, // 1 ano
@@ -43,49 +43,49 @@ export default defineConfig({
               },
             },
           },
-          // {
-          //   urlPattern: /^https:\/\/api\.exemplo\.com\/.*/i,
-          //   handler: 'NetworkFirst',
-          //   options: {
-          //     cacheName: 'api-cache',
-          //     expiration: {
-          //       maxEntries: 50,
-          //       maxAgeSeconds: 60 * 60 * 24, // 24 horas
-          //     },
-          //     cacheableResponse: {
-          //       statuses: [0, 200],
-          //     },
-          //     networkTimeoutSeconds: 10,
-          //   },
-          // },
+          {
+            urlPattern: /^http:\/\/localhost:8000\/.*/i,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "api-cache",
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24, // 24 horas
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+              networkTimeoutSeconds: 10,
+            },
+          },
         ],
       },
       manifest: {
-        id: 'com.stringari-pwa',
-        name: 'Stringari Carrocerias',
-        short_name: 'Stringari',
-        description: 'Aplicativo PWA para Stringari Carrocerias',
-        theme_color: '#4a90d9',
-        background_color: '#ffffff',
-        display: 'standalone',
-        scope: '/',
-        start_url: '/',
+        id: "com.stringari-pwa",
+        name: "Stringari Carrocerias",
+        short_name: "Stringari",
+        description: "Aplicativo PWA para Stringari Carrocerias",
+        theme_color: "#4a90d9",
+        background_color: "#ffffff",
+        display: "standalone",
+        scope: "/",
+        start_url: "/",
         icons: [
           {
-            src: '/icons/icon-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
+            src: "/icons/icon-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
           },
           {
-            src: '/icons/icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
+            src: "/icons/icon-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
           },
           {
-            src: '/icons/icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'maskable',
+            src: "/icons/icon-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable",
           },
         ],
       },
@@ -97,7 +97,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
 });
