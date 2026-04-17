@@ -66,7 +66,7 @@ const paginaAtual = (path) => {
   border-top: 1px solid red;
   position: fixed;
   bottom: 0;
-  padding: 24px 24px;
+  padding: 12px 24px;
   width: 100%;
   display: flex;
   justify-content: space-around;
