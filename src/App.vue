@@ -1,6 +1,7 @@
 <script setup>
 
 import AppHeader from './components/layout/AppHeader.vue';
+import AppFooter from './components/layout/AppFooter.vue';
 
 // import { onMounted } from 'vue'
 // import { useCarroceriasStore } from './stores/carroceria';
@@ -23,7 +24,7 @@ import AppHeader from './components/layout/AppHeader.vue';
             </p>
         </li>
     </ul> -->
-
+    <AppFooter></AppFooter>
 </template>
 
 <style scoped>
