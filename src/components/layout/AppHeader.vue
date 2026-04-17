@@ -15,7 +15,7 @@ const currentPath = computed(() => route.path)
 const paginaAtual = (path) => {
   return currentPath.value === path ? "active": "inactive";
 }
-const toggle = ref(true);
+const toggle = ref(false);
 
 const handleToggle = () => {
   toggle.value = !toggle.value;
