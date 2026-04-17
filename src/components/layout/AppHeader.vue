@@ -42,7 +42,6 @@ const isActive = ref(false);
         <div
           v-if="toggle"
           ref="menuTarget"
-          style="box-shadow: 0 0 10px 1000px rgb(118, 118, 118, 0.5)"
         >
           <div class="handle-acess">
             <div class="handle-up">
@@ -72,7 +71,7 @@ const isActive = ref(false);
           </div>
         </div>
       </div>
-      <div class="circle" id="primary-user" :style="toggle ? 'opacity: 0.5;' : ''">
+      <div class="circle" id="primary-user" >
         <img src="/icons/icon-512x512.png" alt="foto" />
       </div>
     </nav>
@@ -83,20 +82,31 @@ const isActive = ref(false);
         position: fixed;
         top: 80px;
       "
-      :style="toggle ? 'opacity: 0.5;' : ''";
     ></div>
   </div>
 </template>
 
 <style scoped>
 
+.all {
+  background-color: #F8F9FA;
+  position: fixed;
+  top: 0;
+  margin-bottom: 70px;
+  width: 100%;
+}
+
 nav {
-  display: flex;
+ display: flex;
   justify-content: space-between;
 }
 
 #primary-user {
-  margin: 20px 5vw;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-right: 24px;
+  margin-left: 24px;
 }
 
 .handle-acess {
@@ -108,7 +118,7 @@ nav {
   padding: 0 10%;
   padding-bottom: 24px;
   border-bottom-right-radius: 10px;
-  box-shadow: 0 0 10px 1px rgba(118, 118, 118, 0.2);
+  box-shadow: 0 0 10px 1px rgba(118, 118, 118, 0.3);
 }
 
 .handle-up {
@@ -157,7 +167,7 @@ nav {
   max-height: 40px;
   border-radius: 100%;
   overflow: hidden;
-  border: 1px solid black;
+  border: 1px solid #767676;
 }
 
 .circle img {
