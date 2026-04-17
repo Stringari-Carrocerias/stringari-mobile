@@ -1,5 +1,7 @@
 <script setup>
 
+import AppHeader from './components/layout/AppHeader.vue';
+
 // import { onMounted } from 'vue'
 // import { useCarroceriasStore } from './stores/carroceria';
 
@@ -12,6 +14,7 @@
 </script>
 
 <template>
+    <AppHeader></AppHeader>
 
     <!-- <ul>
         <li v-for="carroceria in store.carrocerias">
