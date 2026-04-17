@@ -15,13 +15,15 @@ const currentPath = computed(() => route.path)
 const paginaAtual = (path) => {
   return currentPath.value === path ? "active": "inactive";
 }
-const toggle = ref(true);
+
+const toggle = ref(false);
 
 const handleToggle = () => {
   toggle.value = !toggle.value;
 };
 
 const menuTarget = ref(null);
+
 onClickOutside(menuTarget, () => {
   toggle.value = false;
 });
@@ -87,6 +89,7 @@ const isActive = ref(false);
 </template>
 
 <style scoped>
+
 nav {
   display: flex;
   justify-content: space-between;
@@ -105,7 +108,6 @@ nav {
   padding: 0 10%;
   padding-bottom: 24px;
   border-bottom-right-radius: 10px;
-  list-style-type: none;
   box-shadow: 0 0 10px 1px rgba(118, 118, 118, 0.2);
 }
 
