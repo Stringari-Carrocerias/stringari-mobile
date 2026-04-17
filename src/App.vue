@@ -1,27 +1,34 @@
 <script setup>
+// import { onMounted } from "vue";
+// import { useCarroceriasStore } from "./stores/carroceria";
 
-// import { onMounted } from 'vue'
-// import { useCarroceriasStore } from './stores/carroceria';
-
-// const store = useCarroceriasStore()
+// const store = useCarroceriasStore();
+// const urlImage = import.meta.env.VITE_API_BASE_URL;
 
 // onMounted(() => {
 //   store.fetchCarrocerias();
 // });
 
+// const handleImage = (carroceria) => {
+//     const imagem = urlImage + carroceria
+//     return imagem
+// }
+
+
+
 </script>
 
 <template>
-
-    <!-- <ul>
-        <li v-for="carroceria in store.carrocerias">
-            <p>
-                {{ carroceria.nome }}
-            </p>
-        </li>
-    </ul> -->
-
+  <AppHeader></AppHeader>
+<!-- 
+  <ul>
+    <li v-for="carroceria in store.carrocerias">
+      <p>
+        {{ carroceria.nome }}
+        <img :src="handleImage(carroceria.imagem.url)" alt="nada">
+    </p>
+    </li>
+  </ul> -->
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
