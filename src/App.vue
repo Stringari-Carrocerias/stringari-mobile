@@ -3,6 +3,7 @@
 // import { useCarroceriasStore } from "./stores/carroceria";
 
 import AppHeader from './components/layout/AppHeader.vue';
+import AppFooter from './components/layout/AppFooter.vue';
 
 // import { onMounted } from 'vue'
 // import { useCarroceriasStore } from './stores/carroceria';
@@ -28,12 +29,14 @@ import AppHeader from './components/layout/AppHeader.vue';
 
     <!-- <ul>
         <li v-for="carroceria in store.carrocerias">
-            <p>
-                {{ carroceria.nome }}
-        <img :src="handleImage(carroceria.imagem.url)" alt="nada">
-    </p>
-    </li>
-  </ul> -->
+            <p> 
+               {{ carroceria.nome }}
+              <img :src="handleImage(carroceria.imagem.url)" alt="nada">
+            </p>
+            </li>
+        </ul>  -->
+    <AppFooter></AppFooter>
+       
 </template>
 
 <style scoped></style>
