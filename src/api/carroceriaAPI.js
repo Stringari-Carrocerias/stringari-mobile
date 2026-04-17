@@ -2,19 +2,19 @@ import apiClient from './config.js';
 
 const carroceriasApi = {
   getAll() {
-    return apiClient.get('/modelos%20carrocerias');
+    return apiClient.get('api/modelos%20carrocerias');
   },
 
   create(title) {
-    return apiClient.post('/modelos%20carrocerias', { title });
+    return apiClient.post('api/modelos%20carrocerias', { title });
   },
 
   update(id, data) {
-    return apiClient.patch(`/modelos%20carrocerias/${id}`, data);
+    return apiClient.patch(`api/modelos%20carrocerias/${id}`, data);
   },
 
   remove(id) {
-    return apiClient.delete(`/modelos%20carrocerias/${id}`);
+    return apiClient.delete(`api/modelos%20carrocerias/${id}`);
   },
 };
 
