@@ -11,7 +11,7 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/carrocerias', // ✅ corrigido
+      path: '/carrocerias', 
       name: 'carrocerias',
       component: Carrocerias,
     },
