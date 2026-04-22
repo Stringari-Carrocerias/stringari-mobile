@@ -15,7 +15,7 @@ const footerData = [
     id: 2,
     nome: "Modelos",
     icon: "bi:truck-flatbed",
-    route: '/modelos',
+    route: '/carrocerias',
   },
   {
     id: 3,
