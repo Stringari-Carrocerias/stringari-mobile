@@ -1,11 +1,6 @@
 <template>
   <div class="page">
 
-    <header class="topbar">
-      <button class="menu">☰</button>
-      <div class="avatar"></div>
-    </header>
-
     <section class="header">
       <h1>Modelos de Carrocerias</h1>
       <p>Conheça nossos modelos e escolha o ideal para sua necessidade</p>
@@ -14,27 +9,24 @@
 
     <section class="list">
 
-      <div class="card" v-for="item in dados" :key="item.id">
+      <div class="card" v-for="item in store.carrocerias" :key="item.id">
 
-        <img
-          class="image"
-          :src="item.imagem || 'https://via.placeholder.com/400x200'"
-        />
+        <img :src="handleImage(item.imagem.url)" class="image">
 
-        <h2>{{ item.nome || 'Carroceria' }}</h2>
+        <h2>{{ item.nome }}</h2>
 
         <span class="tag">Transporte de carga</span>
 
         <p class="desc">
-          {{ item.descricao || 'Descrição do modelo de carroceria.' }}
+          {{ item.descricaoCurta }}
         </p>
 
         <h3>Especificações:</h3>
 
         <ul class="specs">
-          <li>Largura: {{ item.largura || '2.5m' }}</li>
-          <li>Comprimento: {{ item.comprimento || '7m' }}</li>
-          <li>Altura: {{ item.altura || '3m' }}</li>
+          <li>Largura: {{ item.largura }}</li>
+          <li>Comprimento: {{ item.comprimento }}</li>
+          <li>Altura: {{ item.altura }}</li>
         </ul>
 
         <div class="actions">
@@ -49,24 +41,22 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      dados: []
-    };
-  },
+<script setup>
+import { ref, onMounted } from 'vue';
 
-  mounted() {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/modelos%20carrocerias/`)
-      .then(res => res.json())
-      .then(data => {
-        this.dados = Array.isArray(data)
-          ? data
-          : data.results || data.data || [];
-      });
-  }
-};
+import { useCarroceriasStore } from "../stores/carroceria.js";
+
+const store = useCarroceriasStore();
+const urlImage = import.meta.env.VITE_API_BASE_URL;
+onMounted(() => {
+  store.fetchCarrocerias();
+});
+
+const handleImage = (carroceria) => {
+    const imagem = urlImage + carroceria
+    return imagem
+}
+
 </script>
 
 <style scoped>
@@ -75,27 +65,6 @@ export default {
   padding: 20px;
   background: #f4f6f8;
   min-height: 100vh;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-}
-
-.menu {
-  font-size: 26px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.avatar {
-  width: 38px;
-  height: 38px;
-  background: #bbb;
-  border-radius: 50%;
 }
 
 .header {
