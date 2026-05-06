@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -6,13 +7,19 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   color: #333;
   min-height: 100vh;
+  margin-top: 20vw;
+  margin-bottom: 23vw;
 }
 
 #app {
   max-width: 480px;
   margin: 0 auto;
-  padding: 0 16px;
 }
+
+li {
+  list-style-type: none;
+}
+
