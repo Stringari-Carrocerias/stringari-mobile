@@ -6,7 +6,7 @@ const carroceriasApi = {
   },
 
   create(title) {
-    return apiClient.post('api/modelosCarrocerias', { title });
+    return apiClient.post('api/modelosCarrocerias/', { title });
   },
 
   update(id, data) {
@@ -15,6 +15,15 @@ const carroceriasApi = {
 
   remove(id) {
     return apiClient.delete(`api/modelosCarrocerias/${id}`);
+  },
+
+  uploadImage(file, description = '') {
+    const formData = new FormData();
+    formData.append('file', file);
+    if (description) formData.append('description', description);
+    return apiClient.post('api/media/images/', formData, {
+      headers: { 'Content-Type' : 'multipart/form-data' },
+    });
   },
 };
 
