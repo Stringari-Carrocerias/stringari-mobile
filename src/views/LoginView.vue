@@ -18,7 +18,7 @@
       </button>
     </div>
 
-    <button class="btn-outline">
+    <button class="btn-outline" @click="handleRoute()">
       Criar nova conta
     </button>
 
@@ -27,6 +27,18 @@
     </p>
   </div>
 </template>
+
+<script setup>
+
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+function handleRoute() {
+  router.push({ name: 'cadastro' })
+}
+
+</script>
 
 <style scoped>
 .container {

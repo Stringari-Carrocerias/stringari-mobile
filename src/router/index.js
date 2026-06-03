@@ -1,34 +1,39 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.js'
 
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
-import Carrocerias from '../views/Carrocerias.vue'
-import AddModelo from '../views/Add.vue'
+import HomeView from '@/views/HomeView.vue'
+import LoginView from '../views/LoginView.vue'
+import SignupView from '../views/SignupView.vue'
+import ModelsView from '../views/ModelsView.vue'
+import AddModel from '../views/AddModel.vue'
 
 const routes = [
   {
     path: '/',
-    redirect: '/login'
+    name: 'home',
+    component: HomeView,
+    meta: { requiresAuth: true },
   },
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: LoginView,
   },
   {
-    path: '/register',
-    name: 'register',
-    component: Register
+    path: '/cadastro',
+    name: 'cadastro',
+    component: SignupView,
   },
   {
-    path: '/carrocerias',
-    name: 'carrocerias',
-    component: Carrocerias
+    path: '/modelos',
+    name: 'modelos',
+    component: ModelsView,
   },
   {
-    path: '/add',
-    name: 'add-modelo',
-    component: AddModelo
+    path: '/modelos/adicionar',
+    name: 'adicionarModelo',
+    component: AddModel,
+    meta: { requiresAuth: true },
   }
 ]
 
@@ -36,5 +41,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
+
+router.beforeEach((to) => {
+  const authStore = useAuthStore();
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    return { name: 'login' };
+  }
+});
 
 export default router
