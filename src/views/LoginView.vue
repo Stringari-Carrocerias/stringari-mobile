@@ -57,7 +57,6 @@ async function handleLogin() {
   errorMessage.value = '';
   try {
     await authStore.login(email.value, password.value);
-    console.log('passou aqui')
     router.push('/');
   } catch (err) {
     console.error()
