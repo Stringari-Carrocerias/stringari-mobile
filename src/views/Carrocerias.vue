@@ -58,12 +58,22 @@ export default {
   },
 
   mounted() {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/modelos%20carrocerias/`)
-      .then(res => res.json())
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/modelosCarrocerias/`)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Erro HTTP: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
+        console.log("Dados recebidos:", data);
+
         this.dados = Array.isArray(data)
           ? data
           : data.results || data.data || [];
+      })
+      .catch(error => {
+        console.error("Erro ao buscar carrocerias:", error);
       });
   }
 };
