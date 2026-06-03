@@ -1,8 +1,8 @@
 <template>
   <div class="container">
 
-    <button class="back">
-      ←
+    <button class="back" @click="handleRoute">
+      <LeftFillIcon height="30px"/>
     </button>
 
     <img src="/logo.png" alt="Logo" />
@@ -25,7 +25,7 @@
         placeholder="Digite sua senha"
       />
 
-      <p class="login-link">
+      <p class="login-link" @click="handleRoute">
         Já tem uma conta? Clique aqui
       </p>
 
@@ -37,6 +37,21 @@
 
   </div>
 </template>
+
+<script setup>
+
+import LeftFillIcon from "@iconify-vue/mingcute/left-fill";
+
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+function handleRoute() {
+  router.push({ name: 'login' })
+}
+
+
+</script>
 
 <style scoped>
 .container {
