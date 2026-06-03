@@ -1,15 +1,12 @@
 <template>
   <div class="container">
     <header class="topbar">
-      <button class="icon">☰</button>
-      <img class="avatar" src="https://i.pravatar.cc/40" />
     </header>
 
     <h2 class="title">Adicionar modelo</h2>
 
     <div class="card">
 
-      <!-- Upload imagem -->
       <label class="upload">
         <input type="file" @change="handleImage" hidden />
         <span v-if="!image">Adicionar imagem</span>
@@ -20,9 +17,9 @@
       
       <select v-model="form.categoria">
         <option disabled value="">Selecione uma categoria</option>
-        <option>SUV</option>
-        <option>Sedan</option>
-        <option>Hatch</option>
+        <option>bitrem</option>
+        <option>prancha</option>
+        <option>mecanico</option>
       </select>
 
       <input v-model="form.descricaoCurta" placeholder="Adicionar descrição curta" />
@@ -39,13 +36,6 @@
       </div>
 
     </div>
-
-    <nav class="bottom">
-      <span>Início</span>
-      <span>Modelos</span>
-      <span>Orçamento</span>
-      <span>Vendas</span>
-    </nav>
   </div>
 </template>
 
