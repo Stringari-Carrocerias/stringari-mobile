@@ -1,81 +1,93 @@
 <template>
   <div class="page">
-
-    <header class="topbar">
-      <button class="menu">☰</button>
-      <div class="avatar"></div>
-    </header>
-
     <section class="header">
       <h1>Modelos de Carrocerias</h1>
       <p>Conheça nossos modelos e escolha o ideal para sua necessidade</p>
-      <span class="chip">Categorias</span>
+      <div class="chip-border">
+        <select
+          name="categorias"
+          id="categorias"
+          v-model.number="categoriaSelect"
+          @change="handleFiltro"
+          class="chip"
+        >
+          <option :value="-1">Todos</option>
+          <option
+            v-for="categoria in categorias"
+            :key="categoria.id"
+            :value="categoria.id"
+          >
+            {{ categoria.nome }}
+          </option>
+        </select>
+      </div>
+
+      <div v-if="showCategoria === false"></div>
     </section>
 
     <section class="list">
+      <div class="card" v-for="carroceria in carrocerias" :key="carroceria.id">
+        <img :src="handleImage(carroceria.imagem.url)" class="image" />
 
-      <div class="card" v-for="item in dados" :key="item.id">
+        <h2>{{ carroceria.nome }}</h2>
 
-        <img
-          class="image"
-          :src="item.imagem || 'https://via.placeholder.com/400x200'"
-        />
-
-        <h2>{{ item.nome || 'Carroceria' }}</h2>
-
-        <span class="tag">Transporte de carga</span>
+        <p class="tag">{{ carroceria.categoria.nome }}</p>
 
         <p class="desc">
-          {{ item.descricao || 'Descrição do modelo de carroceria.' }}
+          {{ carroceria.descricaoCurta }}
         </p>
 
         <h3>Especificações:</h3>
 
         <ul class="specs">
-          <li>Largura: {{ item.largura || '2.5m' }}</li>
-          <li>Comprimento: {{ item.comprimento || '7m' }}</li>
-          <li>Altura: {{ item.altura || '3m' }}</li>
+          <li>Largura: {{ carroceria.largura }}</li>
+          <li>Comprimento: {{ carroceria.comprimento }}</li>
+          <li>Altura: {{ carroceria.altura }}</li>
         </ul>
 
         <div class="actions">
           <button class="outline">Ver detalhes</button>
           <button class="primary">Solicitar orçamento</button>
         </div>
-
       </div>
-
     </section>
-
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      dados: []
-    };
-  },
+<script setup>
+import LeftFillIcon from "@iconify-vue/mingcute/left-fill";
+import { ref, onMounted } from "vue";
+import { storeToRefs } from "pinia";
 
-  mounted() {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/modelosCarrocerias/`)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`Erro HTTP: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then(data => {
-        console.log("Dados recebidos:", data);
+import { useCarroceriasStore } from "../stores/carroceria.js";
+import { useCategoriasStore } from "@/stores/categoria.js";
 
-        this.dados = Array.isArray(data)
-          ? data
-          : data.results || data.data || [];
-      })
-      .catch(error => {
-        console.error("Erro ao buscar carrocerias:", error);
-      });
-  }
+const { carrocerias } = storeToRefs(useCarroceriasStore());
+const { categorias } = storeToRefs(useCategoriasStore());
+
+const { fetchCarrocerias } = useCarroceriasStore();
+const { fetchCategorias } = useCategoriasStore();
+
+const urlImage = import.meta.env.VITE_API_BASE_URL;
+const categoriaSelect = ref(-1);
+
+let showCategoria = ref(false);
+
+const categoriaSelecionada = categoriaSelect.value === -1 ? '' : categoriaSelect.value; 
+
+onMounted(() => {
+  fetchCategorias();
+  fetchCarrocerias(categoriaSelecionada);
+});
+
+const handleFiltro = async () => {
+  const categoriaSelecionada = categoriaSelect.value === -1 ? '' : categoriaSelect.value; 
+  await fetchCarrocerias(categoriaSelecionada);
+};
+
+const handleImage = (carroceria) => {
+  const imagem = urlImage + carroceria;
+  return imagem;
 };
 </script>
 
@@ -87,27 +99,6 @@ export default {
   min-height: 100vh;
 }
 
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-}
-
-.menu {
-  font-size: 26px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.avatar {
-  width: 38px;
-  height: 38px;
-  background: #bbb;
-  border-radius: 50%;
-}
-
 .header {
   margin-top: 10px;
   margin-bottom: 20px;
@@ -115,7 +106,7 @@ export default {
 
 .header h1 {
   font-size: 26px;
-  color: #C6070C;
+  color: #c6070c;
   margin-bottom: 6px;
 }
 
@@ -124,13 +115,20 @@ export default {
   margin-bottom: 10px;
 }
 
-.chip {
-  display: inline-block;
-  padding: 6px 12px;
-  background: #e5e7eb;
+.chip-border {
+  padding: 4px 8px;
   border-radius: 999px;
-  font-size: 12px;
-  color: #374151;
+  border: 1px solid #EBEBEB;
+  background-color: #EBEBEB;
+  font-size: 16px;
+  max-width: 130px;
+  color: #767676;
+}
+
+.chip {
+  font-size: 16px;
+  border: none;
+  background-color: #EBEBEB;
 }
 
 /* LIST */
@@ -145,13 +143,12 @@ export default {
   background: white;
   border-radius: 18px;
   padding: 14px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   transition: 0.2s ease;
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0,0,0, 0.1);
 }
 
 .image {

@@ -1,9 +1,15 @@
+<script setup>
+
+import AppHeader from './components/layout/AppHeader.vue';
+import AppFooter from './components/layout/AppFooter.vue';
+
+</script>
+
 <template>
-  <router-view />
+  <AppHeader></AppHeader>
+    <router-view />
+  <AppFooter></AppFooter>
+       
 </template>
 
-<script>
-export default {
-  name: "App"
-};
-</script>
+<style scoped></style>
