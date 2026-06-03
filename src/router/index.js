@@ -28,6 +28,7 @@ const routes = [
     path: '/modelos',
     name: 'modelos',
     component: ModelsView,
+    meta: { requiresAuth: true },
   },
   {
     path: '/modelos/adicionar',

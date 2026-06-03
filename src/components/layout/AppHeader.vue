@@ -1,6 +1,4 @@
 <script setup>
-// A borda do header tá ficando errada
-// Trocar os valores do toggle antes de commitar
 
 import router from "@/router";
 import { onClickOutside } from "@vueuse/core";

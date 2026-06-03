@@ -50,12 +50,14 @@
           <button class="primary">Solicitar orçamento</button>
         </div>
       </div>
+      <AppButton />
     </section>
   </div>
 </template>
 
 <script setup>
 import LeftFillIcon from "@iconify-vue/mingcute/left-fill";
+import AppButton from "@/components/forms/AppButton.vue";
 import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
