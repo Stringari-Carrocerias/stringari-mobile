@@ -5,7 +5,7 @@ import HomeView from '@/views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
 import ModelsView from '../views/ModelsView.vue'
-import AddModel from '../views/AddModel.vue'
+import AddModelView from '../views/AddModelView.vue'
 
 const routes = [
   {
@@ -33,7 +33,7 @@ const routes = [
   {
     path: '/modelos/adicionar',
     name: 'adicionarModelo',
-    component: AddModel,
+    component: AddModelView,
     meta: { requiresAuth: true },
   }
 ]

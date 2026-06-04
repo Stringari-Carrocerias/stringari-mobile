@@ -91,6 +91,8 @@ const handleImage = (carroceria) => {
   const imagem = urlImage + carroceria;
   return imagem;
 };
+
+
 </script>
 
 <style scoped>

@@ -1,12 +1,12 @@
 import apiClient from './config.js';
 
-const carroceriasApi = {
+const carroceriaApi = {
   getAll(categoriaSelecionada) {
     return apiClient.get(`api/modelosCarrocerias/?categoria=${categoriaSelecionada}`);
   },
 
-  create(title) {
-    return apiClient.post('api/modelosCarrocerias/', { title });
+  create(data) {
+    return apiClient.post('api/modelosCarrocerias/', data);
   },
 
   update(id, data) {
@@ -27,4 +27,4 @@ const carroceriasApi = {
   },
 };
 
-export default carroceriasApi;
+export default carroceriaApi;

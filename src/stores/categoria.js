@@ -14,8 +14,18 @@ export const useCategoriasStore = defineStore('categorias', () => {
         }
     };
 
+    async function addCategoria(nome) {
+        try {
+            const response = await categoriaApi.create(nome);
+            categorias.value.push(response.data)
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     return {
         categorias,
         fetchCategorias,
+        addCategoria,
     };
 });
