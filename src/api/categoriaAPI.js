@@ -2,11 +2,11 @@ import apiClient from './config.js';
 
 const categoriaApi = {
   getAll() {
-    return apiClient.get('api/categorias');
+    return apiClient.get('api/categorias/');
   },
 
-  create(title) {
-    return apiClient.post('api/categorias', { title });
+  create(nome) {
+    return apiClient.post('api/categorias/', { nome });
   },
 
   update(id, data) {
