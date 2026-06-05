@@ -9,13 +9,15 @@
 
     <h2>Vamos começar!</h2>
 
-    <div class="form">
+    <form class="form" @submit.prevent="handleSignup">
 
       <label>Digite seu e-mail</label>
 
       <input
         type="email"
         placeholder="seu@email.com"
+        v-model="email"
+        required
       />
 
       <label>Digite sua senha</label>
@@ -23,16 +25,18 @@
       <input
         type="password"
         placeholder="Digite sua senha"
-      />
+        v-model="password"
+        required
+        />
 
       <p class="login-link" @click="handleRoute">
         Já tem uma conta? Clique aqui
       </p>
 
-    </div>
+    </form>
 
-    <button class="btn-primary">
-      Criar nova conta
+    <button class="btn-primary" type="submit" @click="handleSignup">
+      {{ loading == true ? 'Criando..' : 'Criar nova conta' }}
     </button>
 
   </div>
@@ -41,15 +45,33 @@
 <script setup>
 
 import LeftFillIcon from "@iconify-vue/mingcute/left-fill";
-
+import { ref } from "vue";
 import { useRouter } from 'vue-router';
+import { useAuthStore } from "@/stores/auth";
 
 const router = useRouter();
+const authStore = useAuthStore();
+
+const email = ref('');
+const password = ref('');
+const loading = ref(false);
 
 function handleRoute() {
   router.push({ name: 'login' })
 }
 
+
+async function handleSignup() {
+  loading.value = false;
+  try {
+    await authStore.signup(email.value, password.value);
+    router.push('/login');
+  } catch (err) {
+    console.error(err)
+  } finally {
+    loading.value = false;
+  }
+}
 
 </script>
 
