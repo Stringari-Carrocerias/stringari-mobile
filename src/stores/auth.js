@@ -23,17 +23,12 @@ export const useAuthStore = defineStore('auth', () => {
         localStorage.removeItem('refresh_token');
     }
 
-    async function signup(email, password) {
-        await authAPI.cadastro(email, password)
-    }
-
     return {
         accessToken,
         refreshToken,
         isAuthenticated,
         login,
         logout,
-        signup,
     }
 
 })
