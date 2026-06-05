@@ -70,7 +70,7 @@ const { categorias } = storeToRefs(useCategoriasStore());
 const { fetchCarrocerias } = useCarroceriasStore();
 const { fetchCategorias } = useCategoriasStore();
 
-const urlImage = import.meta.env.VITE_API_BASE_URL;
+const urlImage = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
 const categoriaSelect = ref(-1);
 
 let showCategoria = ref(false);
@@ -89,7 +89,9 @@ const handleFiltro = async () => {
 
 const handleImage = (carroceria) => {
   const imagem = urlImage + carroceria;
+  console.log(imagem);
   return imagem;
+  
 };
 
 
