@@ -5,7 +5,7 @@
       <LeftFillIcon height="30px"/>
     </button>
 
-    <img src="/logo.png" alt="Logo" />
+    <img src="/public/logo.png" alt="Logo" />
 
     <h2>Vamos começar!</h2>
 
@@ -92,15 +92,17 @@ async function handleSignup() {
 }
 
 .container img {
-  width: 120px;
+  width: 132px;
   margin-top: 60px;
-  margin-bottom: 100px;
+  margin-bottom: 48px;
   align-self: center;
 }
 
 h2 {
   text-align: center;
   margin-bottom: 40px;
+  font-size: 24px;
+  font-weight: 600;
 }
 
 .form {
@@ -108,24 +110,25 @@ h2 {
 }
 
 label {
-  font-size: 12px;
+  font-size: 16px;
   color: #777;
 }
 
 input {
   width: 100%;
-  height: 45px;
+  height: 50px;
   margin-top: 6px;
   margin-bottom: 14px;
-  border-radius: 6px;
+  border-radius: 10px;
   border: 1px solid #ccc;
   padding: 0 12px;
   box-sizing: border-box;
+  font-size: 16px;
 }
 
 .login-link {
-  color: #ff2a0a;
-  font-size: 11px;
+  color: #C71E25;
+  font-size: 12px;
 }
 
 .btn-primary {
@@ -133,9 +136,17 @@ input {
   width: 100%;
   height: 50px;
   border: none;
-  border-radius: 25px;
-  background: #ff2a0a;
+  border-radius: 28px;
+  background: #C71E25;
   color: white;
   cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
+
+.btn-primary:active {
+  background-color: #991b20;
+}
+
+
 </style>
