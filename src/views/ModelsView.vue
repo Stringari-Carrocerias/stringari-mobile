@@ -97,10 +97,8 @@ const handleImage = (carroceria) => {
 
 <style scoped>
 .page {
-  font-family: system-ui, Arial;
   padding: 20px;
-  background: #f4f6f8;
-  min-height: 100vh;
+  padding-bottom: 30vw;
 }
 
 .header {

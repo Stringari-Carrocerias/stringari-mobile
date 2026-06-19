@@ -1,77 +1,112 @@
 <template>
   <div class="container">
-    <header class="topbar"></header>
-
     <h2 class="title">Adicionar</h2>
 
-    <form class="card" @submit.prevent="handleSubmit">
-      <label class="upload">
-        <input
-          type="file"
-          accept="image/jpeg,image/png"
-          :disabled="uploading"
-          @change="handleImageChange"
-          hidden
-        />
-        <span v-if="!previewUrl">Adicionar imagem</span>
-        <img v-else :src="previewUrl" alt="Prévia da imagem" />
-      </label>
+    <form @submit.prevent="handleSubmit">
+      <div class="card">
+        <label class="upload">
+          <input
+            type="file"
+            accept="image/jpeg,image/png"
+            :disabled="uploading"
+            @change="handleImageChange"
+            hidden
+          />
+          <span v-if="!previewUrl">Adicionar imagem</span>
+          <img v-else :src="previewUrl" alt="Prévia da imagem" />
+        </label>
 
-      <input
-        v-model="newModel.nome"
-        placeholder="Adicionar nome da carroceria"
-      />
+        <div>
+          <p class="input-title">Adicionar nome da carroceria</p>
+          <input
+            v-model="newModel.nome"
+            placeholder="Ex: Carroceria de Madeira..."
+          />
+        </div>
 
-      <select v-model="newModel.categoria_send" @change="handleCategoria">
-        <option disabled value="">Selecione uma categoria</option>
-        <option
-          v-for="categoria in categoriasStore.categorias"
-          :key="categoria.id"
-        >
-          {{ categoria.nome }}
-        </option>
+        <div>
+          <p class="input-title">Selecione uma categoria</p>
+          <select v-model="newModel.categoria_send" @change="handleCategoria">
+            <option disabled value="">Selecione uma categoria</option>
+            <option
+              v-for="categoria in categoriasStore.categorias"
+              :key="categoria.id"
+            >
+              {{ categoria.nome }}
+            </option>
 
-        <option>Outros</option>
-      </select>
+            <option>Outros</option>
+          </select>
+          <input
+            v-model="newModel.categoria_send"
+            placeholder="Adicionar categoria"
+            v-if="toggleCategoria === true"
+          />
+        </div>
 
-      <input
-        v-model="newModel.categoria_send"
-        placeholder="Adicionar categoria"
-        v-if="toggleCategoria === true"
-      />
+        <div>
+          <p class="input-title">Adicionar descrição curta</p>
+          <input
+            v-model="newModel.descricaoCurta"
+            placeholder="Máximo 100 caracteres"
+          />
+        </div>
 
-      <input
-        v-model="newModel.descricaoCurta"
-        placeholder="Adicionar descrição curta"
-      />
+        <div>
+          <p class="input-title">Adicionar descrição</p>
+          <textarea
+            v-model="newModel.descricao"
+            placeholder="Máximo 255 caracteres"
+          ></textarea>
+        </div>
 
-      <textarea
-        v-model="newModel.descricao"
-        placeholder="Adicionar descrição"
-      ></textarea>
+        <div>
+          <p class="input-title">Adicionar especificações</p>
 
-      <div>
-        <p>Adicionar especificações</p>
-        <input
-          v-model="newModel.comprimento"
-          placeholder="Adicionar especificações"
-        />
-        <input
-          v-model="newModel.largura"
-          placeholder="Adicionar especificações"
-        />
-        <input
-          v-model="newModel.altura"
-          placeholder="Adicionar especificações"
-        />
+          <div class="especification-group">
+            <p class="especification-name">Largura</p>
+            <input
+              v-model="newModel.largura"
+              @input="newModel.largura = newModel.largura.replace(',', '.')"
+              placeholder="Digite aqui"
+              class="especification-input"
+            />
+            <p class="especification-unit">m</p>
+          </div>
+
+          <div class="especification-group">
+            <p class="especification-name">Comprimento</p>
+            <input
+              v-model="newModel.comprimento"
+              @input="newModel.comprimento = newModel.comprimento.replace(',', '.')"
+              placeholder="Digite aqui"
+              class="especification-input"
+            />
+            <p class="especification-unit">m</p>
+          </div>
+
+          <div class="especification-group">
+            <p class="especification-name">Altura</p>
+            <input
+              v-model="newModel.altura"
+              @input="newModel.altura = newModel.altura.replace(',', '.')"
+              placeholder="Digite aqui"
+              class="especification-input"
+            />
+            <p class="especification-unit">m</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="input-title">Adicionar preço</p>
+          <input
+            v-model="newModel.valor"
+            @input="newModel.valor = newModel.preco.replace(',', '.')"
+            type="number"
+            placeholder="R$ Digite aqui o valor"
+          />
+        </div>
       </div>
-
-      <input
-        v-model.number="newModel.valor"
-        type="number"
-        placeholder="Adicionar preço"
-      />
-
       <div class="buttons">
         <button class="cancel" @click="handleErase">Cancelar</button>
         <button class="submit" type="submit">Adicionar Modelo</button>
@@ -87,7 +122,6 @@ import { useCategoriasStore } from "@/stores/categoria";
 
 import { useCarroceriasStore } from "@/stores/carroceria";
 import carroceriaApi from "@/api/carroceriaAPI";
-
 
 const { addCarroceria } = useCarroceriasStore();
 const categoriasStore = useCategoriasStore();
@@ -141,6 +175,11 @@ async function handleImageChange(event) {
 }
 
 async function handleSubmit() {
+
+  newModel.value.comprimento = Number(String(newModel.value.comprimento.replace(",", ".")));
+  newModel.value.largura = Number(String(newModel.value.largura.replace(",", ".")));
+  newModel.value.altura = Number(String(newModel.value.altura.replace(",", ".")));
+
   const verificarCategoria = categoriasStore.categorias.filter(
     (categoria) => categoria.nome === newModel.value.categoria_send,
   );
@@ -177,73 +216,116 @@ function handleErase() {
 </script>
 
 <style scoped>
-.container {
-  max-width: 420px;
-  margin: auto;
-  font-family: sans-serif;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-}
-
 .title {
-  color: red;
+  color: #c71e25;
   font-weight: bold;
   margin-left: 10px;
 }
 
 .card {
   background: #fff;
-  padding: 15px;
-  border-radius: 15px;
+  padding: 28px;
+  margin: 24px 24px 0 24px;
   border: 1px solid #eee;
+  border-radius: 32px;
 }
 
 .upload {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 120px;
-  border: 2px dashed red;
-  border-radius: 12px;
-  margin-bottom: 10px;
+  object-fit: cover;
+  overflow: hidden;
+  height: 180px;
+  border: 1px dashed #c71e25;
+  border-radius: 14px;
+  margin-bottom: 20px;
   cursor: pointer;
 }
 
 .upload img {
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.input-title {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #000;
 }
 
 input,
 select,
 textarea {
   width: 100%;
-  margin: 6px 0;
+  margin-bottom: 10px;
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #ddd;
 }
 
+.especification-group {
+  font-size: 12px;
+  color: #7a7a7a;
+  display: flex;
+  align-items: center;
+  max-width: 240px;
+  height: 28px;
+  border: 1px solid #8a8a8a;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  background: #fff;
+}
+
+.especification-name {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 1.25rem;
+  border-right: 2px solid #8a8a8a;
+  border-radius: 50px;
+}
+
+.especification-input {
+  display: flex;
+  border: none;
+  outline: none;
+  color: #555;
+  background: transparent;
+  margin-bottom: 0;
+}
+
+.especification-unit {
+  padding-right: 16px;
+}
+
 .buttons {
   display: flex;
-  justify-content: space-between;
   margin-top: 10px;
+  font-size: 12px;
+  padding: 24px 24px 40px 24px;
 }
 
 .cancel {
-  background: #eee;
+  background: none;
+  border: 1px solid #767676;
+  width: 40%;
   padding: 10px;
   border-radius: 10px;
 }
 
 .submit {
-  background: red;
+  border: none;
+  background: #c71e25;
   color: white;
   padding: 10px;
+  margin-left: 8px;
   border-radius: 10px;
+  width: 60%;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 .bottom {

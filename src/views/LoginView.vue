@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img src="/logo.png" alt="Logo" />
+    <img src="/logo.png" alt="Logo" class="container-logo" />
 
     <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
 
@@ -20,76 +20,67 @@
       />
 
       <button type="submit" :disabled="loading" class="btn-primary">
-        {{ loading ? 'Entrando..' : 'Entrar' }}
+        {{ loading ? "Entrando.." : "Entrar" }}
       </button>
     </form>
-
-    <button class="btn-outline" @click="handleRoute()">
-      Criar nova conta
-    </button>
+    <div class="group-btn">
+      <button class="btn-outline" @click="handleRoute()">
+        Criar nova conta
+      </button>
+    </div>
 
     <p class="footer">
-    <img src="/logo-original.png" alt="Logo" />
+      <img src="/logo-original.png" alt="Logo" />
     </p>
   </div>
 </template>
 
 <script setup>
-
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/auth';
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
 
 const router = useRouter();
 const authStore = useAuthStore();
 
 function handleRoute() {
-  router.push({ name: 'cadastro' })
+  router.push({ name: "cadastro" });
 }
 
-const email = ref('');
-const password = ref('');
-const errorMessage = ref('');
+const email = ref("");
+const password = ref("");
+const errorMessage = ref("");
 const loading = ref(false);
 
 async function handleLogin() {
   loading.value = true;
-  errorMessage.value = '';
+  errorMessage.value = "";
   try {
     await authStore.login(email.value, password.value);
-    router.push('/');
+    router.push("/");
   } catch (err) {
-    console.error()
+    console.error();
   } finally {
     loading.value = false;
   }
 }
-
 </script>
 
 <style scoped>
 .container {
-  min-height: 100vh;
-  background: #efefef;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 24px;
 }
 
-.footer img {
-  width: 100px;
-}
-
-.container img {
+.container-logo {
   width: 120px;
-  margin-top: 60px;
+  margin-top: 120px;
   margin-bottom: 100px;
 }
 
 .form {
-  width: 100%;
-  max-width: 320px;
+  padding: 0 24px;
 }
 
 input {
@@ -103,28 +94,39 @@ input {
 }
 
 .btn-primary {
+  font-weight: 500;
   width: 100%;
   height: 48px;
   border: none;
   border-radius: 25px;
-  background: #ff2a0a;
+  background: #c71e25;
   color: white;
   cursor: pointer;
+  margin-top: 24px;
+}
+
+.group-btn {
+  width: 100%;
+  padding: 0 24px;
 }
 
 .btn-outline {
-  margin-top: 140px;
+  font-weight: 500;
+  margin-top: 40%;
   width: 100%;
-  max-width: 320px;
   height: 48px;
   border-radius: 25px;
   background: transparent;
-  border: 1px solid #ff2a0a;
-  color: #ff2a0a;
-  margin-bottom: 20px;
+  border: 1px solid #c71e25;
+  color: #c71e25;
 }
 
 .footer {
   font-size: 10px;
+}
+
+.footer img {
+  margin-top: 24px;
+  width: 120px;
 }
 </style>

@@ -78,7 +78,6 @@ async function handleSignup() {
 <style scoped>
 .container {
   min-height: 100vh;
-  background: #efefef;
   display: flex;
   flex-direction: column;
   padding: 24px;

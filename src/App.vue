@@ -15,7 +15,7 @@ const verifyRoute = computed(() => {
 
 <template>
   <AppHeader v-if="verifyRoute"></AppHeader>
-    <router-view :style="verifyRoute ? 'margin-top:20vw; margin-bottom:23vw' : ''" />
+    <router-view :style="verifyRoute ? 'margin-top:20vw; margin-bottom:20vw' : ''" />
   <AppFooter v-if="verifyRoute"></AppFooter>
        
 </template>
