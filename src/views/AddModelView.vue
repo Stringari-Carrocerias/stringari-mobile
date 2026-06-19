@@ -162,7 +162,7 @@ async function handleImageChange(event) {
 
   try {
     const response = await carroceriaApi.uploadImage(file);
-    previewUrl.value = BASE_URL + response.data.url;
+    previewUrl.value = response.data.url;
     imgAttachmentKey.value = response.data.attachment_key;
     newModel.value.imagem_attachment_key = response.data.attachment_key;
   } catch (err) {
