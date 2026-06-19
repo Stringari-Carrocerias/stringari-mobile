@@ -27,7 +27,7 @@
 
     <section class="list">
       <div class="card" v-for="carroceria in carrocerias" :key="carroceria.id">
-        <img :src="handleImage(carroceria.imagem.url)" class="image" />
+        <img :src="carroceria.imagem.url" class="image" />
 
         <h2>{{ carroceria.nome }}</h2>
 
