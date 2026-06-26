@@ -6,6 +6,8 @@ import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
 import ModelsView from '../views/ModelsView.vue'
 import AddModelView from '../views/AddModelView.vue'
+import PersonalInfoView from '../views/PersonalInfoView.vue'
+import SettingsView from '../views/SettingsView.vue'
 
 const routes = [
   {
@@ -23,6 +25,18 @@ const routes = [
     path: '/cadastro',
     name: 'cadastro',
     component: SignupView,
+  },
+  {
+    path: '/configuracoes',
+    name: 'configuracoes',
+    component: SettingsView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/informacoes-pessoais',
+    name: 'informacoes-pessoais',
+    component: PersonalInfoView,
+    meta: { requiresAuth: true },
   },
   {
     path: '/modelos',

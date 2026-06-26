@@ -1,5 +1,4 @@
 <script setup>
-
 import router from "@/router";
 import { onClickOutside } from "@vueuse/core";
 import { ref } from "vue";
@@ -8,44 +7,58 @@ import { computed } from "vue";
 
 const route = useRoute();
 
-const currentPath = computed(() => route.path)
+const currentPath = computed(() => route.path);
 
 const paginaAtual = (path) => {
-  return currentPath.value === path ? "active": "inactive";
-}
-
-const toggle = ref(false);
-
-const handleToggle = () => {
-  toggle.value = !toggle.value;
+  return currentPath.value === path ? "active" : "inactive";
 };
 
-const menuTarget = ref(null);
+// Left menu
 
-onClickOutside(menuTarget, () => {
-  toggle.value = false;
+const toggleLeft = ref(false);
+
+const handleToggleLeft = () => {
+  toggleLeft.value = !toggleLeft.value;
+};
+
+const menuLeftTarget = ref(null);
+
+onClickOutside(menuLeftTarget, () => {
+  toggleLeft.value = false;
 });
 
-const isActive = ref(false);
+// Right menu
 
+const toggleRight = ref(false);
+
+const handleToggleRight = () => {
+  toggleRight.value = !toggleRight.value;
+};
+
+const menuRightTarget = ref(null);
+
+onClickOutside(menuRightTarget, () => {
+  toggleRight.value = false;
+});
+
+
+
+// Logout
 </script>
 
 <template>
   <div class="all">
     <nav>
-      <div v-if="!toggle" @click="handleToggle" id="primary-user">
+      <div v-if="!toggleLeft" @click="handleToggleLeft" id="primary-user">
         <img src="/icons/hamburger-button.svg" alt="hamburger-button" />
       </div>
       <div>
-        <div
-          v-if="toggle"
-          ref="menuTarget"
-        >
-          <div class="handle-acess">
-            <div class="handle-up">
+        <div v-if="toggleLeft" ref="menuLeftTarget">
+          <div class="left-handle-acess">
+            <div class="left-handle-up">
               <img src="/icons/logo-original.png" alt="logo-criada" />
             </div>
-            <div class="handle-down">
+            <div class="left-handle-down">
               <ul>
                 <li
                   :class="paginaAtual('/meusorcamentos')"
@@ -69,8 +82,35 @@ const isActive = ref(false);
           </div>
         </div>
       </div>
-      <div class="circle" id="primary-user" >
+
+      <div class="circle" id="primary-user" @click="handleToggleRight">
         <img src="/icons/icon-512x512.png" alt="foto" />
+      </div>
+      <div v-if="toggleRight" ref="menuRightTarget">
+        <div class="right-handle-acess">
+          <div class="row-image">
+            <div class="right-image">
+              <img src="/icons/icon-512x512.png" alt="foto" />
+            </div>
+          </div>
+          <ul>
+            <li
+              :class="paginaAtual('/informacoes-pessoais')"
+              @click="router.push('/informacoes-pessoais')"
+            >
+              <p>Informações Pessoais</p>
+            </li>
+            <li
+              :class="paginaAtual('/configuracoes')"
+              @click="router.push('/configuracoes')"
+            >
+              <p>Configurações</p>
+            </li>
+            <li class="leave-account">
+              <p>Sair da sua conta</p>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
     <div
@@ -85,9 +125,8 @@ const isActive = ref(false);
 </template>
 
 <style scoped>
-
 .all {
-  background-color: #F8F9FA;
+  background-color: #f8f9fa;
   position: fixed;
   top: 0;
   margin-bottom: 70px;
@@ -95,7 +134,7 @@ const isActive = ref(false);
 }
 
 nav {
- display: flex;
+  display: flex;
   justify-content: space-between;
 }
 
@@ -107,7 +146,9 @@ nav {
   margin-left: 24px;
 }
 
-.handle-acess {
+/*=============== LEFT MENU ===============*/
+
+.left-handle-acess {
   position: fixed;
   top: 0;
   margin: 0;
@@ -119,23 +160,23 @@ nav {
   box-shadow: 0 0 10px 1px rgba(118, 118, 118, 0.3);
 }
 
-.handle-up {
+.left-handle-up {
   margin: 0;
   max-width: 150px;
   overflow: hidden;
 }
 
-.handle-up img {
+.left-handle-up img {
   margin-top: 20px;
   margin-bottom: 24px;
   max-width: 150px;
 }
 
-.handle-down ul {
+.left-handle-down ul {
   list-style-type: none;
 }
 
-.handle-down ul li {
+.left-handle-down ul li {
   font-size: 16px;
   margin-bottom: 16px;
   display: flex;
@@ -146,7 +187,7 @@ nav {
 
 .active {
   color: #ff0000;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #e2e8f0;
   box-sizing: border-box;
 }
 
@@ -158,6 +199,8 @@ nav {
   font-size: 20px;
   margin-right: 10px;
 }
+
+/*=============== RIGHT MENU ===============*/
 
 .circle {
   margin: 20px 0;
@@ -171,5 +214,62 @@ nav {
 .circle img {
   max-width: 40px;
   max-height: 40px;
+}
+
+.right-handle-acess {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 0;
+  background-color: #ffffff;
+  z-index: 101;
+  padding: 40px 5%;
+  border-bottom-left-radius: 10px;
+  box-shadow: 0 0 10px 1px rgba(118, 118, 118, 0.3);
+}
+
+/*===== USER MENU PROFILE ===== */
+
+.row-image {
+  display: flex;
+  justify-content: center;
+}
+
+.right-image {
+  max-width: 40px;
+  max-height: 40px;
+  border-radius: 100%;
+  overflow: hidden;
+  border: 1px solid #767676;
+}
+
+.right-image img {
+  max-width: 40px;
+  max-height: 40px;
+}
+
+/*===== TEXT MENU =====*/
+
+.right-handle-acess ul {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.right-handle-acess ul li {
+  font-size: 16px;
+  margin-top: 12px;
+  display: flex;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+
+.leave-account {
+  margin-top: 28px;
+  color: #ff0007;
 }
 </style>
