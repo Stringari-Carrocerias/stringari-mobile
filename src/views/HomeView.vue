@@ -10,7 +10,7 @@
       <h2>Carrocerias</h2>
       <p>Acesse a lista de modelos disponíveis no sistema</p>
 
-      <router-link to="/carrocerias">
+      <router-link to="/modelos">
         <button class="btn">
           Entrar na seção
         </button>
