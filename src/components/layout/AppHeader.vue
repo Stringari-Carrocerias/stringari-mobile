@@ -1,9 +1,11 @@
 <script setup>
 import router from "@/router";
 import { onClickOutside } from "@vueuse/core";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
+import { useAuthStore } from "@/stores/auth";
+import { useUsuarioStore } from "@/stores/usuario";
 
 const route = useRoute();
 
@@ -41,9 +43,27 @@ onClickOutside(menuRightTarget, () => {
   toggleRight.value = false;
 });
 
+// User Photo
 
+const usuarioStore = useUsuarioStore()
+const photoUrl = ref(null);
+
+onMounted(async () => {
+  if (useAuthStore().isAuthenticated) {
+    await usuarioStore.fetchUsuario()
+  } 
+  photoUrl.value = usuarioStore.usuario.foto.url || null
+})
 
 // Logout
+
+const { logout } = useAuthStore();
+
+const handleLogout = () => {
+  logout();
+  router.push('/login');
+}
+
 </script>
 
 <template>
@@ -84,13 +104,13 @@ onClickOutside(menuRightTarget, () => {
       </div>
 
       <div class="circle" id="primary-user" @click="handleToggleRight">
-        <img src="/icons/icon-512x512.png" alt="foto" />
+        <img :src=photoUrl alt="foto" />
       </div>
       <div v-if="toggleRight" ref="menuRightTarget">
         <div class="right-handle-acess">
           <div class="row-image">
             <div class="right-image">
-              <img src="/icons/icon-512x512.png" alt="foto" />
+              <img :src=photoUrl alt="foto" />
             </div>
           </div>
           <ul>
@@ -106,7 +126,7 @@ onClickOutside(menuRightTarget, () => {
             >
               <p>Configurações</p>
             </li>
-            <li class="leave-account">
+            <li class="leave-account" @click="handleLogout">
               <p>Sair da sua conta</p>
             </li>
           </ul>
@@ -202,19 +222,25 @@ nav {
 
 /*=============== RIGHT MENU ===============*/
 
+
 .circle {
   margin: 20px 0;
-  max-width: 40px;
-  max-height: 40px;
-  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   overflow: hidden;
   border: 1px solid #767676;
 }
 
 .circle img {
-  max-width: 40px;
-  max-height: 40px;
+  object-fit: cover;
+  width: 40px;
+  height: 40px;
+  align-self: center;
 }
+
+
+/*===== USER MENU PROFILE ===== */
 
 .right-handle-acess {
   position: fixed;
@@ -228,24 +254,23 @@ nav {
   box-shadow: 0 0 10px 1px rgba(118, 118, 118, 0.3);
 }
 
-/*===== USER MENU PROFILE ===== */
-
 .row-image {
   display: flex;
   justify-content: center;
 }
 
 .right-image {
-  max-width: 40px;
-  max-height: 40px;
+  width: 60px;
+  height: 60px;
   border-radius: 100%;
   overflow: hidden;
   border: 1px solid #767676;
 }
 
 .right-image img {
-  max-width: 40px;
-  max-height: 40px;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
 }
 
 /*===== TEXT MENU =====*/

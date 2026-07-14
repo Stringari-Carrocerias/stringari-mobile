@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import userApi from "@/api/userAPI";
 
 export const useUsuarioStore = defineStore('usuario', () => {
-    const usuario = ref([]);
+    const usuario = ref({});
 
     async function fetchUsuario() {
         try {
@@ -14,8 +14,19 @@ export const useUsuarioStore = defineStore('usuario', () => {
         } 
     }
 
+    async function updateUsuario(id, usuarioData) {
+        try {
+            const response = await userApi.update(id, usuarioData);
+            usuario.value = response.data;
+        } catch(err) {
+            err.value = 'Erro ao atualizar usuario',
+            console.error(err);
+        }
+    }
+
     return {
-        usuario,
         fetchUsuario,
+        updateUsuario,
+        usuario,
     }
 })

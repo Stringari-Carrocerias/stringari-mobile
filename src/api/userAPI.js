@@ -2,9 +2,11 @@ import apiClient from "./config";
 
 const userApi = {
   getMe(data) {
-    return apiClient.get("/api/usuarios/me", data);
+    return apiClient.get("/api/usuarios/me/", data);
   },
-
+  update(id, data) {
+    return apiClient.patch(`api/usuarios/${id}/`, data);
+  },
   uploadImage(file, description = "") {
     const formData = new FormData();
     formData.append("file", file);
