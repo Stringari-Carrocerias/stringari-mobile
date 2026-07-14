@@ -30,7 +30,7 @@
 
 
 .hero {
-  background: #C6070C;
+  background-color: #C6070C;
   color: white;
   padding: 24px;
   border-radius: 16px;
@@ -46,7 +46,6 @@
 .hero p {
   margin-top: 8px;
   font-size: 14px;
-  opacity: 0.9;
 }
 
 
