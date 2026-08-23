@@ -1,11 +1,18 @@
 <script setup>
 import router from "@/router";
-import { onClickOutside } from "@vueuse/core";
+import { onClickOutside, useStorage } from "@vueuse/core";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { useUsuarioStore } from "@/stores/usuario";
+import { useToastStore } from "@/stores/toast";
+
+// Toast
+
+const toast = useToastStore();
+
+// Route
 
 const route = useRoute();
 
@@ -45,25 +52,33 @@ onClickOutside(menuRightTarget, () => {
 
 // User Photo
 
-const usuarioStore = useUsuarioStore()
+const usuarioStore = useUsuarioStore();
 const photoUrl = ref(null);
 
 onMounted(async () => {
-  if (useAuthStore().isAuthenticated) {
-    await usuarioStore.fetchUsuario()
-  } 
-  photoUrl.value = usuarioStore.usuario.foto.url || null
-})
+  try {
+    if (useAuthStore().isAuthenticated) {      
+      await usuarioStore.fetchUsuario();
+    }
+    photoUrl.value = usuarioStore.usuario.foto?.url || null;
+  } catch (error) {
+    toast.showToast('Erro ao carregar dados do usuário.', 'error');
+  }
+});
 
 // Logout
 
 const { logout } = useAuthStore();
 
 const handleLogout = () => {
-  logout();
-  router.push('/login');
-}
-
+  try {
+    logout();
+    router.push("/login");
+    toast.showToast('Volte sempre 😁.');
+  } catch (error) {
+    toast.showToast('Erro ao sair da conta.', 'error');
+  }
+};
 </script>
 
 <template>
@@ -104,13 +119,13 @@ const handleLogout = () => {
       </div>
 
       <div class="circle" id="primary-user" @click="handleToggleRight">
-        <img :src=photoUrl alt="foto" />
+        <img :src="photoUrl" alt="foto" />
       </div>
       <div v-if="toggleRight" ref="menuRightTarget">
         <div class="right-handle-acess">
           <div class="row-image">
             <div class="right-image">
-              <img :src=photoUrl alt="foto" />
+              <img :src="photoUrl" alt="foto" />
             </div>
           </div>
           <ul>
@@ -172,7 +187,7 @@ nav {
   position: fixed;
   top: 0;
   margin: 0;
-  z-index: 100;
+  z-index: 30;
   background-color: #ffffff;
   padding: 0 10%;
   padding-bottom: 24px;
@@ -222,7 +237,6 @@ nav {
 
 /*=============== RIGHT MENU ===============*/
 
-
 .circle {
   margin: 20px 0;
   width: 40px;
@@ -239,7 +253,6 @@ nav {
   align-self: center;
 }
 
-
 /*===== USER MENU PROFILE ===== */
 
 .right-handle-acess {
@@ -248,7 +261,7 @@ nav {
   right: 0;
   margin: 0;
   background-color: #ffffff;
-  z-index: 101;
+  z-index: 31;
   padding: 40px 5%;
   border-bottom-left-radius: 10px;
   box-shadow: 0 0 10px 1px rgba(118, 118, 118, 0.3);

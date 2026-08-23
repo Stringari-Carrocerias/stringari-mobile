@@ -3,6 +3,8 @@ import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 
 import { useUsuarioStore } from "@/stores/usuario.js";
+import { useToastStore } from "@/stores/toast.js";
+
 import CloseIcon from "@iconify-vue/material-symbols/close";
 import CameraIcon from "@iconify-vue/gridicons/camera";
 import userApi from "@/api/userAPI";
@@ -13,8 +15,8 @@ const { usuario } = storeToRefs(useUsuarioStore());
 const router = useRouter();
 
 const { fetchUsuario, updateUsuario } = useUsuarioStore();
+const toast = useToastStore();
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
 const previewUrl = ref(null);
 const imgAttachmentKey = ref(null);
 const uploading = ref(false);
@@ -28,17 +30,24 @@ const userInfo = ref({
 
 const userGroup = ref();
 
+let userInfoBackup = ref({});
+
 onMounted(async () => {
   await fetchUsuario();
   userInfo.value = {
     email: usuario.value.email,
-    foto_attachment_key: imgAttachmentKey.value || usuario.value.foto.foto,
+    foto_attachment_key: imgAttachmentKey.value || usuario.value.foto.attachment_key,
     fullName: usuario.value.fullName || null,
     phone: usuario.value.phone || '',
   };
+  
   userGroup.value = usuario.value.name;
-  previewUrl.value = usuario.value.foto.url;
+  previewUrl.value = usuario.value.foto?.url;
+  userInfoBackup.value = { ...userInfo.value };
+  console.log("backup criado", userInfoBackup.value)
 });
+
+
 
 async function handleImageChange(event) {
   const file = event.target.files[0];
@@ -47,11 +56,15 @@ async function handleImageChange(event) {
 
   try {
     const response = await userApi.uploadImage(file);
+
     previewUrl.value = response.data.url;
     imgAttachmentKey.value = response.data.attachment_key;
     userInfo.value.foto_attachment_key = imgAttachmentKey.value;
-  } catch (err) {
-    console.error("Erro ao fazer upload da imagem ", err);
+    
+    toast.showToast("Upload realizado com sucesso.");
+
+  } catch (error) {
+    toast.showToast("Erro ao fazer upload da imagem", "error");
     previewUrl.value = null;
     imgAttachmentKey.value = null;
   } finally {
@@ -59,8 +72,41 @@ async function handleImageChange(event) {
   }
 }
 
-const handleUpdate = (id, userData) => {
-  updateUsuario(id, userData);
+function handleError(data) {
+  if (data?.foto_attachment_key) {
+    return toast.showToast('Erro ao adicionar imagem.', 'error')
+  } 
+  if (data?.email) {
+    return toast.showToast('Email inválido', 'error')
+  }
+  if (data?.fullName) {
+    console.log("Error", userInfoBackup.value)
+    return toast.showToast(data.fullName[0] || 'Nome completo inválido', 'error')
+  }
+  if (data?.phone) {
+    return toast.showToast('Telefone inválido', 'error')
+  }
+  return false;
+}
+
+const handleUpdate = async (id, userData) => {
+  console.log("Clicou", userInfoBackup.value)
+  try {
+    await updateUsuario(id, userData);
+    toast.showToast("Alteração salva com sucesso.")
+    userInfoBackup.value = { ...userInfo.value }
+
+  } catch(error) {
+    const data = error.response?.data;
+
+    const handled = handleError(data)
+
+    if (handled === false) {
+      toast.showToast("Erro ao salvar alterações.", "error")
+    }
+    
+    userInfo.value = { ...userInfoBackup.value }
+  }
 };
 
 function handleRoute(route){
@@ -116,7 +162,7 @@ function handleRoute(route){
         <div class="form-bar"></div>
         <div class="form-group">
           <p>Nome Completo</p>
-          <input type="text" v-model=userInfo.fullName placeholder="Toque para adicionar" />
+          <input type="text" v-model=userInfo.fullName placeholder="Toque para adicionar" style="margin-right: 10px; overflow: hidden;"/>
         </div>
         <div class="form-bar"></div>
         <div class="form-group" style="border: none;">
@@ -252,11 +298,11 @@ function handleRoute(route){
 }
 
 .form-group {
-  padding: 0 16px;
+  padding: 0 1rem;
   max-width: 100%;
   display: flex;
   justify-content: space-between;
-  margin: 24px 0;
+  margin: 1.5rem 0;
 }
 
 .form-group p {

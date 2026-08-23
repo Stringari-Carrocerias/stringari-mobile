@@ -18,9 +18,9 @@ export const useUsuarioStore = defineStore('usuario', () => {
         try {
             const response = await userApi.update(id, usuarioData);
             usuario.value = response.data;
-        } catch(err) {
-            err.value = 'Erro ao atualizar usuario',
-            console.error(err);
+        } catch(error) {
+            console.error(error);
+            throw error;
         }
     }
 
