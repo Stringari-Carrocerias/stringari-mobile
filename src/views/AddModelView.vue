@@ -78,7 +78,9 @@
             <p class="especification-name">Comprimento</p>
             <input
               v-model="newModel.comprimento"
-              @input="newModel.comprimento = newModel.comprimento.replace(',', '.')"
+              @input="
+                newModel.comprimento = newModel.comprimento.replace(',', '.')
+              "
               placeholder="Digite aqui"
               class="especification-input"
             />
@@ -101,7 +103,7 @@
           <p class="input-title">Adicionar preço</p>
           <input
             v-model="newModel.valor"
-            @input="newModel.valor = newModel.preco.replace(',', '.')"
+            @input="newModel.valor = newModel.valor.replace(',', '.')"
             type="number"
             placeholder="R$ Digite aqui o valor"
           />
@@ -123,8 +125,12 @@ import { useCategoriasStore } from "@/stores/categoria";
 import { useCarroceriasStore } from "@/stores/carroceria";
 import carroceriaApi from "@/api/carroceriaAPI";
 
+import { useToastStore } from "@/stores/toast";
+
 const { addCarroceria } = useCarroceriasStore();
 const categoriasStore = useCategoriasStore();
+
+const toast = useToastStore();
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
 
@@ -145,8 +151,15 @@ const newModel = ref({
   categoria_send: "",
 });
 
-onMounted(() => {
-  categoriasStore.fetchCategorias();
+onMounted(async () => {
+  try {
+    await categoriasStore.fetchCategorias();
+  } catch (error) {
+    toast.showToast(
+      error.response?.data?.detail || "Erro em categorias",
+      "error",
+    );
+  }
 });
 
 function handleCategoria() {
@@ -165,8 +178,9 @@ async function handleImageChange(event) {
     previewUrl.value = response.data.url;
     imgAttachmentKey.value = response.data.attachment_key;
     newModel.value.imagem_attachment_key = response.data.attachment_key;
-  } catch (err) {
-    console.error("Erro ao fazer upload da imagem ", err);
+    toast.showToast("Upload realizado com sucesso.");
+  } catch (error) {
+    toast.showToast("Erro ao fazer upload da imagem ", error);
     previewUrl.value = null;
     imgAttachmentKey.value = null;
   } finally {
@@ -174,30 +188,81 @@ async function handleImageChange(event) {
   }
 }
 
-async function handleSubmit() {
+function handleError(data, error) {
+  if (data?.imagem_attachment_key) {
+    if (newModel.value.imagem_attachment_key === null)
+      return toast.showToast("Insira uma imagem", error);
+    return toast.showToast("Erro em imagem", error);
+  }
+  if (data?.nome) {
+    return toast.showToast("Nome inválido", error);
+  }
+  if (data?.categoria_send) {
+    return toast.showToast("Categoria inválida.", error);
+  }
 
-  newModel.value.comprimento = Number(String(newModel.value.comprimento.replace(",", ".")));
-  newModel.value.largura = Number(String(newModel.value.largura.replace(",", ".")));
-  newModel.value.altura = Number(String(newModel.value.altura.replace(",", ".")));
+  if (data?.descricaoCurta) {
+    return toast.showToast("Descrição curta inválida.", error);
+  }
+
+  if (data?.descricao) {
+    return toast.showToast("Descrição inválida.", error);
+  }
+
+  if (data?.largura) {
+    return toast.showToast("Largura inválida.", error);
+  }
+
+  if (data?.comprimento) {
+    return toast.showToast("Comprimento inválido.", error);
+  }
+
+  if (data?.altura) {
+    return toast.showToast("Altura inválida.", error);
+  }
+
+  if (data?.valor) {
+    return toast.showToast("Preço inválido.", error);
+  }
+  return false;
+}
+
+async function handleSubmit() {
+  newModel.value.comprimento = Number(String(newModel.value.comprimento ?? "").replace(",", ".")) || null;
+  newModel.value.largura = Number(String(newModel.value.largura ?? "").replace(",", ".")) || null;
+  newModel.value.altura = Number(String(newModel.value.altura ?? "").replace(",", ".")) || null;
+
+  // Adiciona Categoria
 
   const verificarCategoria = categoriasStore.categorias.filter(
     (categoria) => categoria.nome === newModel.value.categoria_send,
   );
 
-  if (verificarCategoria.length == 0) {
+  if (verificarCategoria.length === 0) {
     await categoriasStore.addCategoria(newModel.value.categoria_send);
-    const achaTudo = categoriasStore.categorias.findIndex(
-      (categoria) => categoria.nome == newModel.value.categoria_send,
-    );
-    newModel.value.categoria_send = categoriasStore.categorias[achaTudo].nome;
+    // const achaTudo = categoriasStore.categorias.findIndex(
+    //   (categoria) => categoria.nome == newModel.value.categoria_send,
+    // );
+    // newModel.value.categoria_send = categoriasStore.categorias[achaTudo]?.nome;
+    console.log(newModel.value.categoria_send)
   }
 
-  await addCarroceria(newModel.value);
+  try {
+    await addCarroceria(newModel.value);
+    toast.showToast("Carroceria adicionada com sucesso.");
+    previewUrl.value = null;
+    imgAttachmentKey.value = null;
 
-  previewUrl.value = null;
-  imgAttachmentKey.value = null;
+    handleErase();
+  } catch (error) {
+    const data = error.response?.data;
 
-  handleErase();
+    const handled = handleError(data, "error");
+
+    if (handled === false) {
+      return toast.showToast("Erro ao adicionar carroceria.", "error");
+    }
+  }
 }
 
 function handleErase() {

@@ -9,8 +9,8 @@ export const useCarroceriasStore = defineStore('carrocerias', () => {
     try {
       const response = await carroceriasApi.getAll(categoriaSelecionada);
       carrocerias.value = response.data.results;
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -18,8 +18,9 @@ async function addCarroceria(carroceriaData) {
   try {
     const response = await carroceriasApi.create(carroceriaData);
     carrocerias.value.push(response.data);
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 }
 

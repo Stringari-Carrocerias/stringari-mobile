@@ -39,6 +39,9 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
+import { useToastStore } from "@/stores/toast";
+
+const toast = useToastStore();
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -57,9 +60,10 @@ async function handleLogin() {
   errorMessage.value = "";
   try {
     await authStore.login(email.value, password.value);
+    toast.showToast('Login realizado com sucesso.')
     router.push("/");
-  } catch (err) {
-    console.error();
+  } catch (error) {
+    toast.showToast('Erro ao realizar login.', 'error')
   } finally {
     loading.value = false;
   }

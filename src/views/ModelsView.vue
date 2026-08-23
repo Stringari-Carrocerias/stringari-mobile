@@ -3,13 +3,13 @@
     <section class="header">
       <h1>Modelos de Carrocerias</h1>
       <p>Conheça nossos modelos e escolha o ideal para sua necessidade</p>
-      <div class="chip-border">
+      <div class="filter-border">
         <select
           name="categorias"
           id="categorias"
           v-model.number="categoriaSelect"
           @change="handleFiltro"
-          class="chip"
+          class="filter"
         >
           <option :value="-1">Todos</option>
           <option
@@ -27,7 +27,7 @@
 
     <section class="list">
       <div class="card" v-for="carroceria in carrocerias" :key="carroceria.id">
-        <img :src="carroceria.imagem.url" class="image" />
+        <img :src="carroceria.imagem.file" class="image" />
 
         <h2>{{ carroceria.nome }}</h2>
 
@@ -64,34 +64,48 @@ import { storeToRefs } from "pinia";
 import { useCarroceriasStore } from "../stores/carroceria.js";
 import { useCategoriasStore } from "@/stores/categoria.js";
 
+// Toast
+
+import { useToastStore } from "@/stores/toast.js";
+
+const toast = useToastStore();
+
+// Modelos de Carrocerias
+
 const { carrocerias } = storeToRefs(useCarroceriasStore());
 const { categorias } = storeToRefs(useCategoriasStore());
 
 const { fetchCarrocerias } = useCarroceriasStore();
 const { fetchCategorias } = useCategoriasStore();
 
-const urlImage = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
 const categoriaSelect = ref(-1);
 
 let showCategoria = ref(false);
 
-const categoriaSelecionada = categoriaSelect.value === -1 ? '' : categoriaSelect.value; 
+const categoriaSelecionada = categoriaSelect.value === -1 ? "" : categoriaSelect.value;
 
-onMounted(() => {
-  fetchCategorias();
-  fetchCarrocerias(categoriaSelecionada);
+onMounted(async () => {
+  try {
+    await fetchCategorias();
+  } catch (error) {
+    toast.showToast('Erro ao carregar categorias.', 'error');
+  }
+
+  try {
+    await fetchCarrocerias(categoriaSelecionada);
+  } catch (error) {
+    toast.showToast('Erro ao carregar modelos.', 'error');
+  }
 });
 
 const handleFiltro = async () => {
-  const categoriaSelecionada = categoriaSelect.value === -1 ? '' : categoriaSelect.value; 
-  await fetchCarrocerias(categoriaSelecionada);
+  try {
+    const categoriaSelecionada = categoriaSelect.value === -1 ? "" : categoriaSelect.value;
+    await fetchCarrocerias(categoriaSelecionada);
+  } catch(error) {
+    toast.showToast( error.response?.data?.detail || 'Erro ao filtrar.', 'error')
+  }
 };
-
-const handleImage = (carroceria) => {
-  const imagem = urlImage + carroceria;
-  return imagem;
-};
-
 
 </script>
 
@@ -117,20 +131,22 @@ const handleImage = (carroceria) => {
   margin-bottom: 10px;
 }
 
-.chip-border {
+/* FILTER */
+
+.filter-border {
   padding: 4px 8px;
   border-radius: 999px;
-  border: 1px solid #EBEBEB;
-  background-color: #EBEBEB;
+  border: 1px solid #ebebeb;
+  background-color: #ebebeb;
   font-size: 16px;
-  max-width: 130px;
+  width: fit-content;
   color: #767676;
 }
 
-.chip {
+.filter {
   font-size: 16px;
   border: none;
-  background-color: #EBEBEB;
+  background-color: #ebebeb;
 }
 
 /* LIST */
@@ -150,7 +166,7 @@ const handleImage = (carroceria) => {
 }
 
 .card:hover {
-  box-shadow: 0 10px 25px rgba(0,0,0, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .image {
