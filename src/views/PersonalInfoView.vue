@@ -36,11 +36,11 @@ onMounted(async () => {
   await fetchUsuario();
   userInfo.value = {
     email: usuario.value.email,
-    foto_attachment_key: imgAttachmentKey.value || usuario.value.foto.attachment_key,
-    fullName: usuario.value.fullName || null,
-    phone: usuario.value.phone || '',
+    foto_attachment_key: imgAttachmentKey?.value || usuario.value.foto?.attachment_key,
+    fullName: usuario.value?.fullName || null,
+    phone: usuario.value?.phone || '',
   };
-  
+    
   userGroup.value = usuario.value.name;
   previewUrl.value = usuario.value.foto?.url;
   userInfoBackup.value = { ...userInfo.value };
@@ -254,12 +254,16 @@ function handleRoute(route){
   bottom: -10px;
   left: 0;
   right: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .handle-image {
   display: flex;
+  align-items: center;
   background-color: #fff;
-  padding: 1vw 5vw;
+  padding: 1vw 3vw;
   border-radius: 20px;
   text-align: center;
   justify-content: center;
