@@ -1,12 +1,13 @@
 <script setup>
 import router from "@/router";
-import { onClickOutside, useStorage } from "@vueuse/core";
+import { onClickOutside } from "@vueuse/core";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { useUsuarioStore } from "@/stores/usuario";
 import { useToastStore } from "@/stores/toast";
+import { useAuth } from "@/composables/useAuth";
 
 // Toast
 
@@ -68,30 +69,21 @@ onMounted(async () => {
 
 // Logout
 
-const { logout } = useAuthStore();
+const { handleLogout } = useAuth();
 
-const handleLogout = () => {
-  try {
-    logout();
-    router.push("/login");
-    toast.showToast('Volte sempre 😁.');
-  } catch (error) {
-    toast.showToast('Erro ao sair da conta.', 'error');
-  }
-};
 </script>
 
 <template>
   <div class="all">
     <nav>
       <div v-if="!toggleLeft" @click="handleToggleLeft" id="primary-user">
-        <img src="/icons/hamburger-button.svg" alt="hamburger-button" />
+        <img src="/src/assets/icons/hamburger-button.svg" alt="hamburger-button" />
       </div>
       <div>
         <div v-if="toggleLeft" ref="menuLeftTarget">
           <div class="left-handle-acess">
             <div class="left-handle-up">
-              <img src="/icons/logo-original.png" alt="logo-criada" />
+              <img src="/src/assets/icons/logo-original.png" alt="logo-criada" />
             </div>
             <div class="left-handle-down">
               <ul>
