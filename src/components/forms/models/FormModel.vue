@@ -8,6 +8,7 @@
           :disabled="uploading"
           @change="handleImageChange"
           hidden
+          data-testid="addModelImage-test"
         />
         <span v-if="!previewUrl">Adicionar imagem</span>
         <img v-else :src="previewUrl" alt="Prévia da imagem" />
@@ -23,7 +24,7 @@
 
       <div>
         <p class="input-title">Selecione uma categoria</p>
-        <select v-model="newModel.categoria_send" @change="handleCategoria">
+        <select v-model="newModel.categoria_send" @change="handleCategoria" class="select-category">
           <option disabled value="">Selecione uma categoria</option>
           <option
             v-for="categoria in categoriasStore.categorias"
@@ -38,6 +39,7 @@
           v-model="newModel.categoria_send"
           placeholder="Adicionar categoria"
           v-if="toggleCategoria === true"
+          data-testid="addModelCategory-test"
         />
       </div>
 
@@ -67,6 +69,7 @@
             @input="newModel.largura = newModel.largura.replace(',', '.')"
             placeholder="Digite aqui"
             class="especification-input"
+            data-testid="addModelLargura-test"
           />
           <p class="especification-unit">m</p>
         </div>
@@ -80,6 +83,7 @@
             "
             placeholder="Digite aqui"
             class="especification-input"
+            data-testid="addModelComprimento-test"
           />
           <p class="especification-unit">m</p>
         </div>
@@ -91,6 +95,7 @@
             @input="newModel.altura = newModel.altura.replace(',', '.')"
             placeholder="Digite aqui"
             class="especification-input"
+            data-testid="addModelAltura-test"
           />
           <p class="especification-unit">m</p>
         </div>

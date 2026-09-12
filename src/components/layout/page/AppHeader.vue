@@ -110,7 +110,7 @@ const { handleLogout } = useAuth();
         </div>
       </div>
 
-      <div class="circle" id="primary-user" @click="handleToggleRight">
+      <div class="circle" id="primary-user" @click="handleToggleRight" data-testid="sidebar-right">
         <img :src="photoUrl" alt="foto" />
       </div>
       <div v-if="toggleRight" ref="menuRightTarget">

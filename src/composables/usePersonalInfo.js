@@ -1,5 +1,4 @@
-import { onMounted, ref } from "vue";
-import { storeToRefs } from "pinia";
+import { ref } from "vue";
 
 import { useUsuarioStore } from "@/stores/usuario.js";
 import { useToastStore } from "@/stores/toast.js";
@@ -58,7 +57,6 @@ export function usePersonalInfo() {
       return toast.showToast("Email inválido", "error");
     }
     if (data?.fullName) {
-      console.log("Error", userInfoBackup.value);
       return toast.showToast(
         data.fullName[0] || "Nome completo inválido",
         "error",
@@ -71,7 +69,6 @@ export function usePersonalInfo() {
   }
 
   const handleUpdate = async (id, userData) => {
-    console.log("Clicou", userInfoBackup.value);
     try {
       await updateUsuario(id, userData);
       toast.showToast("Alteração salva com sucesso.");

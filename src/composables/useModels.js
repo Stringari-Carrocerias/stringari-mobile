@@ -100,7 +100,6 @@ export function useModels() {
 
     if (verificarCategoria.length === 0) {
       await categoriasStore.addCategoria(newModel.value.categoria_send);
-      console.log(newModel.value.categoria_send);
     }
 
     try {

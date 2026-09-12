@@ -6,7 +6,6 @@
       <FilterCategoria />
     </section>
     <ModelCard />
-
   </div>
 </template>
 

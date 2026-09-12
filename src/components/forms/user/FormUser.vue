@@ -15,6 +15,7 @@
             :disabled="uploading"
             @change="handleImageChange"
             hidden
+            data-testid="personalTest-image"
           />
           <label
             for="file-input"
@@ -33,12 +34,12 @@
     </div>
     <div class="form-row">
       <div class="form-container">
-        <div class="form-group">
+        <div class="form-group" data-testid="personalTest-email">
           <p>Email</p>
           <input type="text" v-model="userInfo.email" />
         </div>
         <div class="form-bar"></div>
-        <div class="form-group">
+        <div class="form-group" data-testid="personalTest-name">
           <p>Nome Completo</p>
           <input
             type="text"
@@ -48,7 +49,7 @@
           />
         </div>
         <div class="form-bar"></div>
-        <div class="form-group" style="border: none">
+        <div class="form-group" style="border: none" data-testid="personalTest-phone">
           <p>Telefone</p>
           <input
             type="tel"

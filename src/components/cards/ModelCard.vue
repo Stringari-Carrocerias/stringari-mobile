@@ -3,7 +3,7 @@
     <div class="card" v-for="carroceria in carrocerias" :key="carroceria.id">
       <img :src="carroceria.imagem.file" class="image" />
 
-      <h2>{{ carroceria.nome }}</h2>
+      <h2 data-tesid="modelName-test">{{ carroceria.nome }}</h2>
 
       <p class="tag">{{ carroceria.categoria.nome }}</p>
 

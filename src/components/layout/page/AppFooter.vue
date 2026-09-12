@@ -49,7 +49,7 @@ const paginaAtual = (path) => {
         <p style="font-size: 24px;">
           <Icon :icon="rota.icon" />
         </p>
-        <p>
+        <p :data-testid="rota.nome">
           {{ rota.nome }}
         </p>
       </li>
