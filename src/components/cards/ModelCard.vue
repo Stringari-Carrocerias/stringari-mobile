@@ -20,7 +20,7 @@
       </ul>
 
       <div class="actions">
-        <button class="outline">Ver detalhes</button>
+        <button class="outline" @click="handleRoute(`/modelos/detalhes/${carroceria.id}`)" data-testid="modelbtn-test-details">Ver detalhes</button>
         <button class="primary">Solicitar orçamento</button>
       </div>
     </div>
@@ -33,6 +33,7 @@
 import { storeToRefs } from "pinia";
 import { useCarroceriasStore } from "@/stores/carroceria.js";
 import { parseDecimalReverse } from "@/utils/parseDecimal";
+import { handleRoute } from "@/utils/handleRoute";
 
 import AppButton from "@/components/forms/models/AppButton.vue";
 

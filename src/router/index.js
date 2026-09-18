@@ -8,6 +8,7 @@ import ModelsView from '../views/ModelsView.vue'
 import AddModelView from '../views/AddModelView.vue'
 import PersonalInfoView from '../views/PersonalInfoView.vue'
 import SettingsView from '../views/SettingsView.vue'
+import ModelDetailsView from '@/views/ModelDetailsView.vue'
 
 const routes = [
   {
@@ -48,6 +49,12 @@ const routes = [
     path: '/modelos/adicionar',
     name: 'adicionarModelo',
     component: AddModelView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/modelos/detalhes/:id',
+    name: 'modelosDetalhes',
+    component: ModelDetailsView,
     meta: { requiresAuth: true },
   }
 ]

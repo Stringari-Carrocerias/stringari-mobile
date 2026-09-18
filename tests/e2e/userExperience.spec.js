@@ -213,6 +213,15 @@ test("Experiência do usuário", async ({ page }) => {
 
   await expect(page.locator(".card").first()).toBeVisible();
 
-  await expect(page.locator('div > h2').last()).toHaveText('Carroceria Teste E2E')
+  await expect(page.locator("div > h2").last()).toHaveText(
+    "Carroceria Teste E2E",
+  );
 
+  // ====== Modelo Detalhes ======
+  
+  await page.locator(".card").first().getByTestId("modelbtn-test-details").click()
+
+  await expect(page).toHaveURL("/modelos/detalhes/1");
+
+  await expect(page.locator(".image")).toBeVisible();
 });

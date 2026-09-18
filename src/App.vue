@@ -11,7 +11,7 @@ import { computed } from 'vue';
 
 const route = useRoute()
 
-const noRoutes = ['cadastro', 'configuracoes', 'login', 'informacoes-pessoais']
+const noRoutes = ['cadastro', 'configuracoes', 'login', 'informacoes-pessoais', 'modelosDetalhes']
 
 const verifyRoute = computed(() => {
   return noRoutes.includes(route.name);

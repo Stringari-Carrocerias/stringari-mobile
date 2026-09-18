@@ -5,6 +5,10 @@ const carroceriaApi = {
     return apiClient.get(`api/modelosCarrocerias/?categoria=${categoriaSelecionada}`);
   },
 
+  getById(id) {
+    return apiClient.get(`api/modelosCarrocerias/${id}/`);
+  },
+
   create(data) {
     return apiClient.post('api/modelosCarrocerias/', data);
   },

@@ -11,6 +11,7 @@
     "test:e2e": "playwright test tests/e2e/userExperience.spec.js"
   },
   "dependencies": {
+    "@iconify-vue/famicons": "^1.0.3",
     "@iconify-vue/gridicons": "^1.0.4",
     "@iconify-vue/material-symbols": "^1.0.44",
     "@iconify-vue/mdi": "^1.0.3",
