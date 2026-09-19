@@ -19,7 +19,6 @@ const carroceriaDetail = ref({});
 onMounted(async () => {
   await carroceriasStore.fetchCarroceriaDetail(idCarroceria);
   carroceriaDetail.value = carroceriasStore.carroceriaDetail;
-  console.log("Aqui", carroceriaDetail.value.imagem.url);
 });
 
 const acessoriesList = [
@@ -50,11 +49,7 @@ const acessoriesList = [
       <div class="title-container">
         <h2>{{ carroceriaDetail.nome }}</h2>
         <p class="tag">
-          {{
-            !carroceriaDetail.categoria?.caminhao
-              ? "SCANIA G460 A6x2 NA"
-              : carroceriaDetail.categoria?.caminhao
-          }}
+          {{ carroceriaDetail?.caminhao }}
         </p>
         <ul class="sides-container">
           <li>{{ parseDecimalReverse(carroceriaDetail.largura) }}m largura</li>
@@ -80,7 +75,10 @@ const acessoriesList = [
           </ul>
         </div>
         <p class="info-extra">
-          Precisa de mais? <span @click="handleRoute('/orcamento')">Solicite seu orçamento.</span>
+          Precisa de mais?
+          <span @click="handleRoute('/orcamento')"
+            >Solicite seu orçamento.</span
+          >
         </p>
       </div>
     </div>
@@ -88,7 +86,9 @@ const acessoriesList = [
       <div class="border"></div>
       <div class="row-container">
         <p class="price">{{ parseDecimalCurrency(carroceriaDetail.valor) }}</p>
-        <button class="budget-btn" @click="handleRoute('/orcamento')">Solicitar orçamento</button>
+        <button class="budget-btn" @click="handleRoute('/orcamento')">
+          Solicitar orçamento
+        </button>
       </div>
     </div>
   </div>
