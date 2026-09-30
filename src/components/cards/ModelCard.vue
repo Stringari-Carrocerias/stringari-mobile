@@ -1,7 +1,7 @@
 <template>
   <section class="list">
     <div class="card" v-for="carroceria in carrocerias" :key="carroceria.id">
-      <img :src="carroceria.imagem.file" class="image" />
+      <img :src="carroceria.imagem.url" class="image" />
 
       <h2 data-tesid="modelName-test">{{ carroceria.nome }}</h2>
 
