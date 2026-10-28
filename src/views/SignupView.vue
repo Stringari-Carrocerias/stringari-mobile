@@ -1,7 +1,7 @@
 <template>
   <div class="container">
 
-    <button class="back" @click="handleRoute(login)">
+    <button class="back" @click="handleRoute('login')">
       <LeftFillIcon height="30px"/>
     </button>
 

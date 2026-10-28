@@ -76,7 +76,7 @@ const acessoriesList = [
         </div>
         <p class="info-extra">
           Precisa de mais?
-          <span @click="handleRoute('/orcamento')"
+          <span @click="handleRoute('/orcamentos')"
             >Solicite seu orçamento.</span
           >
         </p>
@@ -86,7 +86,7 @@ const acessoriesList = [
       <div class="border"></div>
       <div class="row-container">
         <p class="price">{{ parseDecimalCurrency(carroceriaDetail.valor) }}</p>
-        <button class="budget-btn" @click="handleRoute('/orcamento')">
+        <button class="budget-btn" @click="handleRoute('/orcamentos')">
           Solicitar orçamento
         </button>
       </div>

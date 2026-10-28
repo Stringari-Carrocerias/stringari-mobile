@@ -28,7 +28,7 @@ test.describe('Modelos Detalhes', () => {
 
         await page.locator('.budget-btn').click();
 
-        await expect(page).toHaveURL('/orcamento');
+        await expect(page).toHaveURL('/orcamentos');
 
         await page.goto('/modelos/detalhes/1');
 
@@ -36,6 +36,6 @@ test.describe('Modelos Detalhes', () => {
 
         await page.locator('.info-extra span').click();
 
-        await expect(page).toHaveURL('/orcamento');
+        await expect(page).toHaveURL('/orcamentos');
     })
 })

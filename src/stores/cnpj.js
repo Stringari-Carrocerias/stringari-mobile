@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import cnpjApi from "@/api/cnpjAPI";
 
 export const useCNPJStore = defineStore('cnpj', () => {
-    const cnpjData = ref();
+    const cnpjData = ref({});
 
     async function fetchCNPJ(id) {
         try {

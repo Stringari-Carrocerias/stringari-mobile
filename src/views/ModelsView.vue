@@ -23,14 +23,11 @@ import FilterCategoria from "@/components/FilterCategoria.vue";
 }
 
 .header {
+  --h1-font-size: 26px;
+  --h1-color: #c6070c;
+  --h1-margin-bottom: 6px;
   margin-top: 10px;
   margin-bottom: 20px;
-}
-
-.header h1 {
-  font-size: 26px;
-  color: #c6070c;
-  margin-bottom: 6px;
 }
 
 .header p {

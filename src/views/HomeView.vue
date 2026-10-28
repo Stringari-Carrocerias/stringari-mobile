@@ -29,17 +29,13 @@
 
 
 .hero {
+  --h1-font-size: 22px;
   background-color: #C6070C;
   color: white;
   padding: 24px;
   border-radius: 16px;
   margin-bottom: 20px;
   box-shadow: 0 8px 20px rgba(198, 7, 12, 0.25);
-}
-
-.hero h1 {
-  margin: 0;
-  font-size: 22px;
 }
 
 .hero p {

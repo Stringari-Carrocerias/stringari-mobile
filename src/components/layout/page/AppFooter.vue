@@ -21,7 +21,7 @@ const footerData = [
     id: 3,
     nome: "Orçamento",
     icon: "mdi:file-document-edit-outline",
-    route: '/orcamento',
+    route: '/orcamentos',
   },
   {
     id: 4,

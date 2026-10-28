@@ -24,6 +24,8 @@ const { handleRoute } = usePersonalInfo();
 <style scoped>
 
 .header {
+  --h1-font-size: 20px;
+  --h1-font-weight: 600;
   position: relative;
   display: flex;
   justify-content: center;
@@ -37,12 +39,6 @@ const { handleRoute } = usePersonalInfo();
   position: absolute;
   left: 20px;
   height: 32px;
-}
-
-.header h1 {
-  font-size: 20px;
-  align-self: center;
-  font-weight: 600;
 }
 
 .header div {

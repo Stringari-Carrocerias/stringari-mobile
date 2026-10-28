@@ -24,7 +24,7 @@ const toastStore = useToastStore();
 <template>
   <AppHeader v-if="!verifyRoute"></AppHeader>
   <ToastMessage ></ToastMessage>
-  <div :style="!verifyRoute ? 'margin-top:19vw; margin-bottom:20vw' : ''">
+  <div class="main-content" :class="{ 'withLayout' : !verifyRoute}">
     <router-view/>
   </div>
   <AppFooter v-if="!verifyRoute"></AppFooter>
@@ -32,4 +32,35 @@ const toastStore = useToastStore();
 </template>
 
 <style scoped>
+
+.main-content {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.main-content.withLayout {
+  padding-top: var(--header-height);
+  padding-bottom: var(--footer-height);
+}
+
+/* ==== MOBILE ==== */
+
+@media (max-width: 767px) {
+  .main-content {
+    --header-height: 19vw;
+    --footer-height: 20vw;
+  }
+}
+
+/* ==== DESKTOP ==== */
+
+@media (min-width: 768px) {
+  .main-content {
+    --header-height: 120px;
+    --footer-height: 120px;
+  }
+}
+
+
+
 </style>
