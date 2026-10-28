@@ -62,6 +62,7 @@ const routes = [
     path: '/orcamentos/adicionar',
     name: 'addorcamentos',
     component: AddOrcamentoView,
+    meta: { requiresAuth: true },
   }
 ]
 
