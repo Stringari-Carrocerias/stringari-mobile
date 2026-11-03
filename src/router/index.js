@@ -9,7 +9,7 @@ import AddModelView from '../views/AddModelView.vue'
 import PersonalInfoView from '../views/PersonalInfoView.vue'
 import SettingsView from '../views/SettingsView.vue'
 import ModelDetailsView from '@/views/ModelDetailsView.vue'
-import AddOrcamentoView from '@/views/AddOrcamentoView.vue'
+import AddBudgetView from '@/views/AddBudgetView.vue'
 
 const routes = [
   {
@@ -60,8 +60,8 @@ const routes = [
   },
   {
     path: '/orcamentos/adicionar',
-    name: 'addorcamentos',
-    component: AddOrcamentoView,
+    name: 'AddBudgets',
+    component: AddBudgetView,
     meta: { requiresAuth: true },
   }
 ]
