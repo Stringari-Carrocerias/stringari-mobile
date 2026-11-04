@@ -100,6 +100,7 @@ import { useBudget } from "@/composables/useBudget";
 
 const { cnpjObject, handleCNPJ, handleErase, loading } = useBudget();
 </script>
+
 <style scoped>
 /* ==== GENERAL ==== */
 

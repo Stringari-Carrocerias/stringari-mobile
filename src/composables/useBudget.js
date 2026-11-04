@@ -17,6 +17,15 @@ export function useBudget() {
     legalName: "",
   });
 
+  const cpfObject = ref({
+    requesterName: "",
+    email: "",
+    address: "",
+    phoneNumber: "",
+  });
+
+  const personType = ref("CNPJ");
+
   async function handleCNPJ() {
     loading.value = true;
     await cnpjStore.fetchCNPJ(cnpjObject.value.cnpj);
@@ -55,13 +64,15 @@ export function useBudget() {
       address: "",
       phoneNumber: "",
       legalName: "",
-    }
+    };
   }
 
   return {
+    cpfObject,
     cnpjObject,
     handleCNPJ,
     handleErase,
     loading,
+    personType,
   };
 }
