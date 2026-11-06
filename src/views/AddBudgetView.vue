@@ -16,11 +16,13 @@
     </div>
     <FormCNPJ v-if="personType == 'CNPJ'" />
     <FormCPF v-if="personType == 'CPF'" />
+    <FormTruckBody />
   </div>
 </template>
 <script setup>
 import FormCPF from "@/components/forms/budget/FormCPF.vue";
 import FormCNPJ from "@/components/forms/budget/FormCNPJ.vue";
+import FormTruckBody from "@/components/forms/budget/FormTruckBody.vue";
 import { useBudget } from "@/composables/useBudget";
 
 const { personType } = useBudget();

@@ -67,7 +67,27 @@ export function useBudget() {
     };
   }
 
+  const truckBody = ref({
+    type: "",
+    model: "",
+    length: null,
+    width: null,
+    sidePanels: null,
+    material: "",
+  });
+
+  const includedAcessories = ref({
+    mudguards: "4 Para-barros",
+    floor: "Assoalho 2cm",
+    retroreflective: "Faixas Refletivas Conforme Norma",
+    toolbox: "01 Caixa de ferramenta pequena",
+    tieDownDevices: "Dispositivos de amarração em todas as travessas",
+    finish: "Acabamento em Tinta PU",
+    approved: "Carroceria homologada (C.A.T.)",
+  });
+
   return {
+    truckBody,
     cpfObject,
     cnpjObject,
     handleCNPJ,
