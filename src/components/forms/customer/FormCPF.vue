@@ -1,5 +1,5 @@
 <template>
-  <form class="form-container" @submit.prevent="handleCNPJ">
+  <form class="form-container" @submit.prevent="addCustomerCPF">
     <div class="info-container">
       <p>Nome do Solicitante</p>
       <label name="requesterName">
@@ -59,7 +59,7 @@
 import { vMaska } from "maska/vue";
 import { useCustomer } from "@/composables/useCustomer";
 
-const { cpfObject } = useCustomer();
+const { cpfObject, addCustomerCPF } = useCustomer();
 
 </script>
 

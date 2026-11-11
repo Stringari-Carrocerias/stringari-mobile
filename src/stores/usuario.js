@@ -19,7 +19,6 @@ export const useUsuarioStore = defineStore("usuario", () => {
 
   async function addCustomerCNPJ(payload) {
     try {
-      console.log("Payload CNPJ:", payload);
       const response = await userApi.createCustomerCNPJ(payload);
       customers.value.push(response.data);
     } catch (err) {
@@ -27,9 +26,9 @@ export const useUsuarioStore = defineStore("usuario", () => {
     }
   }
 
-  async function addCustomerCPF() {
+  async function addCustomerCPF(payload) {
     try {
-      const response = await userApi.createCustomerCPF();
+      const response = await userApi.createCustomerCPF(payload);
       customers.value.push(response.data);
     } catch (err) {
       toast.showToast(err, "error");

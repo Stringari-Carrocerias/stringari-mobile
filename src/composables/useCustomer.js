@@ -91,13 +91,35 @@ export function useCustomer() {
     };
   }
 
+  async function addCustomerCPF() {
+    try {
+      const payloadCPF = {
+        fullName: cpfObject.value.requesterName,
+        email: cpfObject.value.email,
+        address: cpfObject.value.address,
+        phone: cpfObject.value.phoneNumber,
+        password: "teste.123",
+      };
+      loading.value = true;
+      await usuarioStore.addCustomerCPF(payloadCPF);
+      toast.showToast("Cliente adicionado com sucesso.");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      loading.value = false;
+    }
+  }
+
+
   return {
-    addCustomerCNPJ,
     cpfObject,
     cnpjObject,
-    handleCNPJ,
-    handleErase,
     loading,
     personType,
+
+    addCustomerCNPJ,
+    addCustomerCPF,
+    handleCNPJ,
+    handleErase,
   };
 }
