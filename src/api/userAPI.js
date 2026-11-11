@@ -1,6 +1,18 @@
 import apiClient from "./config";
 
 const userApi = {
+  getCustomer(data) {
+    return apiClient.get("/api/usuarios/?groups=1", data)
+  },
+
+  createCustomerCNPJ(data) {
+    return apiClient.post('api/registro/cnpj/', data);
+  },
+
+  createCustomerCPF(data) {
+    return apiClient.post('api/registro/cpf/', data);
+  },
+
   getMe(data) {
     return apiClient.get("/api/usuarios/me/", data);
   },

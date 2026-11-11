@@ -40,8 +40,8 @@
           name="phoneNumber"
           v-model="cpfObject.phoneNumber"
           v-maska
-          data-maska="+55 (##) #####-####"
-          placeholder="+55 (##) #####-####"
+          data-maska="(##) #####-####"
+          placeholder="(##) #####-####"
         />
       </label>
     </div>
@@ -57,9 +57,9 @@
 
 <script setup>
 import { vMaska } from "maska/vue";
-import { useBudget } from "@/composables/useBudget";
+import { useCustomer } from "@/composables/useCustomer";
 
-const { cpfObject } = useBudget();
+const { cpfObject } = useCustomer();
 
 </script>
 

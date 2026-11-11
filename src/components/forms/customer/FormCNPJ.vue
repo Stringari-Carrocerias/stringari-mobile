@@ -1,5 +1,5 @@
 <template>
-  <form class="form-container" @submit.prevent="handleCNPJ">
+  <form class="form-container" @submit.prevent="addCustomerCNPJ">
     <div class="cnpj-container">
       <div class="cnpj-search">
         <label>
@@ -30,10 +30,10 @@
 
       <div class="info-container">
         <p>Nome da Empresa</p>
-        <label name="businessName">
+        <label name="fullName">
           <input
-            name="businessName"
-            v-model="cnpjObject.businessName"
+            name="fullName"
+            v-model="cnpjObject.fullName"
             placeholder="Ex: Stringari Carrocerias, LTDA..."
           />
         </label>
@@ -79,8 +79,8 @@
             name="phoneNumber"
             v-model="cnpjObject.phoneNumber"
             v-maska
-            data-maska="+55 (##) #####-####"
-            placeholder="+55 (##) #####-####"
+            data-maska="(##) #####-####"
+            placeholder="(##) #####-####"
           />
         </label>
       </div>
@@ -96,9 +96,9 @@
 <script setup>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { vMaska } from "maska/vue";
-import { useBudget } from "@/composables/useBudget";
+import { useCustomer } from "@/composables/useCustomer";
 
-const { cnpjObject, handleCNPJ, handleErase, loading } = useBudget();
+const { addCustomerCNPJ, cnpjObject, handleCNPJ, handleErase, loading } = useCustomer();
 </script>
 
 <style scoped>
@@ -150,6 +150,7 @@ const { cnpjObject, handleCNPJ, handleErase, loading } = useBudget();
 
   .btn-cancel {
     background: none;
+    background-color: #fff;
     border: 1px solid #767676;
   }
 

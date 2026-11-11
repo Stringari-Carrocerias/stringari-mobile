@@ -25,9 +25,9 @@ const footerData = [
   },
   {
     id: 4,
-    nome: "Vagas",
+    nome: "Clientes",
     icon: "fluent:people-team-16-regular",
-    route: '/vagas',
+    route: '/clientes',
   },
 ];
 
