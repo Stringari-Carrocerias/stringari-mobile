@@ -11,7 +11,16 @@ export const useUsuarioStore = defineStore("usuario", () => {
   async function fetchCustomer() {
     try {
       const response = await userApi.getCustomer();
-      customers.value = response.data;
+      customers.value = response.data.results;
+    } catch (err) {
+      toast.showToast(err, "error");
+    }
+  }
+
+  async function searchCustomer(searchText) {
+    try {
+      const response = await userApi.searchCustomer(searchText);
+      customers.value = response.data.results;
     } catch (err) {
       toast.showToast(err, "error");
     }
@@ -62,6 +71,7 @@ export const useUsuarioStore = defineStore("usuario", () => {
     addCustomerCPF,
     fetchCustomer,
     fetchUsuario,
+    searchCustomer,
     updateUsuario,
   };
 });

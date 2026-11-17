@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="title-container">
-      <h1>Criar Orçamento</h1>
+      <h1>Adicionar Cliente</h1>
     </div>
     <div class="select-container">
       <label v-for="select in ['CNPJ', 'CPF']" :key="select" class="option">

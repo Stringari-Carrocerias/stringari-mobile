@@ -3,9 +3,13 @@ import { useCNPJStore } from "@/stores/cnpj";
 import { useUsuarioStore } from "@/stores/usuario";
 import { capitalize } from "@/utils/capitalizeFirstLetter";
 
+const customers = ref([]);
+
 export function useCustomer() {
   const cnpjStore = useCNPJStore();
   const usuarioStore = useUsuarioStore();
+
+  const searchText = ref('');
 
   const loading = ref(false);
 
@@ -110,16 +114,44 @@ export function useCustomer() {
     }
   }
 
+  async function fetchCustomer() {
+    try {
+      loading.value = true;
+      await usuarioStore.fetchCustomer();
+      customers.value = usuarioStore.customers;
+    } catch (err) {
+      console.error(err);
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  async function searchCustomer(loadingSearch) {
+    try {
+      loadingSearch = true;
+      await usuarioStore.searchCustomer(searchText.value);
+      customers.value = usuarioStore.customers;
+      searchText.value = ''
+    } catch (err) {
+      console.error(err);
+    } finally {
+      loadingSearch = false;
+    }
+  }
 
   return {
+    customers,
     cpfObject,
     cnpjObject,
     loading,
     personType,
+    searchText,
 
     addCustomerCNPJ,
     addCustomerCPF,
     handleCNPJ,
     handleErase,
+    fetchCustomer,
+    searchCustomer,
   };
 }

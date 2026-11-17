@@ -5,6 +5,10 @@ const userApi = {
     return apiClient.get("/api/usuarios/?groups=1", data)
   },
 
+  searchCustomer(text, data) {
+    return apiClient.get(`/api/usuarios/?groups=1&search=${text}`, data);
+  },
+
   createCustomerCNPJ(data) {
     return apiClient.post('api/registro/cnpj/', data);
   },

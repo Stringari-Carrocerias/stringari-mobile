@@ -1,16 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.js'
 
-import HomeView from '@/views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
-import SignupView from '../views/SignupView.vue'
-import ModelsView from '../views/ModelsView.vue'
-import AddModelView from '../views/AddModelView.vue'
-import PersonalInfoView from '../views/PersonalInfoView.vue'
-import SettingsView from '../views/SettingsView.vue'
-import ModelDetailsView from '@/views/ModelDetailsView.vue'
-import AddBudgetView from '@/views/AddBudgetView.vue'
-import AddCustomerView from '@/views/AddCustomerView.vue'
+import { 
+  HomeView,
+  LoginView,
+  SignupView,
+  ModelsView,
+  AddModelView,
+  PersonalInfoView,
+  SettingsView,
+  ModelDetailsView,
+  AddBudgetView,
+  CustomerView,
+  AddCustomerView
+} from '@/views/index.js'
 
 const routes = [
   {
@@ -65,6 +68,13 @@ const routes = [
     component: AddBudgetView,
     meta: { requiresAuth: true },
   },
+  {
+    path: '/clientes/',
+    name: 'clientes',
+    component: CustomerView,
+    meta: { requiresAuth: true },
+  },
+
   {
     path: '/clientes/adicionar',
     name: 'AddCustomer',
