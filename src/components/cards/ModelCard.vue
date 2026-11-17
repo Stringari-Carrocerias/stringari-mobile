@@ -24,7 +24,9 @@
         <button class="primary">Solicitar orçamento</button>
       </div>
     </div>
-    <AppButton />
+    <AppButton route="adicionarModelo">
+      Adicionar Modelo
+    </AppButton>
   </section>
 </template>
 
@@ -35,7 +37,7 @@ import { useCarroceriasStore } from "@/stores/carroceria.js";
 import { parseDecimalReverse } from "@/utils/parseDecimal";
 import { handleRoute } from "@/utils/handleRoute";
 
-import AppButton from "@/components/forms/models/AppButton.vue";
+import AppButton from "../forms/global/AppButton.vue";
 
 // Modelos de Carrocerias
 

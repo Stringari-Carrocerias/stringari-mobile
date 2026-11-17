@@ -16,11 +16,14 @@
     </div>
 
     <CustomerCard />
+    <AppButton route="AddCustomer">Adicionar Cliente</AppButton>
   </div>
 </template>
 
 <script setup>
 import CustomerCard from "@/components/cards/CustomerCard.vue";
+import AppButton from "@/components/forms/global/AppButton.vue";
+
 import { Icon } from "@iconify/vue";
 import { ref } from "vue";
 import { useCustomer } from "@/composables/useCustomer";
