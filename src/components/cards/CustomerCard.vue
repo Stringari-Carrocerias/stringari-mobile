@@ -29,16 +29,17 @@ onMounted(async () => {
   padding-top: 2vw;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  max-width: 100vw;
+  width: 100%;
 
   .customer-card {
     margin-top: 2vw;
-    width: 90%;
+    width: 100%;
   }
 
   .customer-photo {
-    width: 100%;
+    width: 40vw;
+    height: 40vw;
+    object-fit: cover;
     overflow: hidden;
     border-radius: 20px;
     box-shadow: 0 2px 4px 1px rgba(229, 229, 229, 0.5);

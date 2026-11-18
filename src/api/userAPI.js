@@ -21,7 +21,7 @@ const userApi = {
     return apiClient.get("/api/usuarios/me/", data);
   },
   update(id, data) {
-    return apiClient.patch(`api/usuarios/${id}/`, data);
+    return apiClient.patch(`api/usuarios/me/`, data);
   },
   uploadImage(file, description = "") {
     const formData = new FormData();
