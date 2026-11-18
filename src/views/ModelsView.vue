@@ -4,16 +4,16 @@
       <h1>Modelos de Carrocerias</h1>
       <p>Conheça nossos modelos e escolha o ideal para sua necessidade</p>
       <FilterCategoria />
+      <AppButton route="adicionarModelo">Adicionar Modelo</AppButton>
     </section>
     <ModelCard />
   </div>
 </template>
 
 <script setup>
-
+import AppButton from "@/components/forms/global/AppButton.vue";
 import ModelCard from "@/components/cards/ModelCard.vue";
 import FilterCategoria from "@/components/FilterCategoria.vue";
-
 </script>
 
 <style scoped>
@@ -34,5 +34,4 @@ import FilterCategoria from "@/components/FilterCategoria.vue";
   color: #6b7280;
   margin-bottom: 10px;
 }
-
 </style>

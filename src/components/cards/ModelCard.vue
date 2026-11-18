@@ -24,9 +24,6 @@
         <button class="primary">Solicitar orçamento</button>
       </div>
     </div>
-    <AppButton route="adicionarModelo">
-      Adicionar Modelo
-    </AppButton>
   </section>
 </template>
 

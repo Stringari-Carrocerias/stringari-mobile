@@ -16,7 +16,7 @@
     </div>
 
     <CustomerCard />
-    <AppButton class="add-customer" route="AddCustomer">Adicionar Cliente</AppButton>
+    <AppButton route="AddCustomer">Adicionar Cliente</AppButton>
   </div>
 </template>
 
@@ -127,16 +127,5 @@ const loading = ref(false);
     }
   }
 
-  .add-customer {
-    position: static;
-    display: block;
-    width: auto;
-    margin: 32px 0 0 auto;
-    padding: 16px 24px;
-    transform: none;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 40px;
-  }
 }
 </style>
