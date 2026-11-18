@@ -1,5 +1,5 @@
 <template>
-  <div class="customer-container">
+  <div class="customer-page">
     <div class="search-container">
       <div class="search-card">
         <label>
@@ -16,7 +16,7 @@
     </div>
 
     <CustomerCard />
-    <AppButton route="AddCustomer">Adicionar Cliente</AppButton>
+    <AppButton class="add-customer" route="AddCustomer">Adicionar Cliente</AppButton>
   </div>
 </template>
 
@@ -70,7 +70,7 @@ const loading = ref(false);
 }
 
 @media (max-width: 768px) {
-  .customer-container {
+  .customer-page {
     margin: 0 4vw;
   }
 
@@ -88,25 +88,55 @@ const loading = ref(false);
 }
 
 @media (min-width: 769px) {
-  * {
+  .customer-page {
+    width: calc(100% - 48px);
     max-width: 1000px;
     margin: 0 auto;
+    padding: 32px 0;
   }
 
   .search-container {
+    margin-top: 0;
+    gap: 16px;
+
     .search-card {
+      min-width: 0;
+      gap: 24px;
       padding: 20px 24px;
       font-size: 16px;
 
       label {
         flex: 1;
+        min-width: 0;
 
         input {
           width: 100%;
           font-size: 16px;
         }
       }
+
+      .search-btn {
+        flex-shrink: 0;
+        cursor: pointer;
+      }
     }
+
+    .filter-container {
+      flex-shrink: 0;
+      margin-left: 0;
+    }
+  }
+
+  .add-customer {
+    position: static;
+    display: block;
+    width: auto;
+    margin: 32px 0 0 auto;
+    padding: 16px 24px;
+    transform: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 40px;
   }
 }
 </style>

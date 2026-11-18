@@ -2,17 +2,20 @@ import { ref } from "vue";
 import { useCNPJStore } from "@/stores/cnpj";
 import { useUsuarioStore } from "@/stores/usuario";
 import { capitalize } from "@/utils/capitalizeFirstLetter";
+import { useToastStore } from "@/stores/toast";
 
 const customers = ref([]);
 
 export function useCustomer() {
   const cnpjStore = useCNPJStore();
   const usuarioStore = useUsuarioStore();
-
+  
   const searchText = ref('');
-
+  
   const loading = ref(false);
-
+  
+  const toast = useToastStore();
+  
   const cnpjObject = ref({
     cnpj: "",
     requesterName: "",
